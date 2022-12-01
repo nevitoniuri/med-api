@@ -26,6 +26,7 @@ public record MedicoDTO(
         @NotNull
         @Valid
         Endereco endereco) {
+
     public Medico toEntity() {
         return Medico.builder()
                 .nome(this.nome)

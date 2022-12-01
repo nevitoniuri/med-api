@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.model.dto.MedicoDTO;
 import med.voll.api.service.MedicoService;
@@ -15,7 +16,7 @@ public class MedicoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrar(@RequestBody MedicoDTO medico) {
+    public void cadastrar(@RequestBody @Valid MedicoDTO medico) {
         service.cadastrar(medico);
     }
 }

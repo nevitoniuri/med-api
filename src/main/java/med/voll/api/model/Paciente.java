@@ -1,14 +1,16 @@
 package med.voll.api.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import med.voll.api.model.Endereco;
+import lombok.*;
 
-@Getter @Setter
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "pacientes")
+@Entity
+@Table(name = "pacientes")
 public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,12 +5,17 @@ import lombok.*;
 import med.voll.api.model.Endereco;
 import med.voll.api.model.Especialidade;
 
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "medicos")
+@Entity
+@Table(name = "medicos")
 public class Medico {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String crm;

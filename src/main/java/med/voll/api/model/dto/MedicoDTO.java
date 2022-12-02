@@ -5,11 +5,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import med.voll.api.model.Endereco;
 import med.voll.api.model.Especialidade;
-import med.voll.api.model.Medico;
 
+@Builder
 public record MedicoDTO(
+
+        Long id,
         @NotBlank
         String nome,
         @NotBlank
@@ -26,15 +29,4 @@ public record MedicoDTO(
         @NotNull
         @Valid
         Endereco endereco) {
-
-    public Medico toEntity() {
-        return Medico.builder()
-                .nome(this.nome)
-                .crm(this.crm)
-                .email(this.email)
-                .telefone(this.telefone)
-                .especialidade(this.especialidade)
-                .endereco(this.endereco)
-                .build();
-    }
 }

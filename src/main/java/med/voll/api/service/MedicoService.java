@@ -2,9 +2,14 @@ package med.voll.api.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import med.voll.api.model.dto.MedicoDTO;
+import med.voll.api.exception.ResourceNotFoundException;
+import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -12,9 +17,21 @@ public class MedicoService {
 
     private final MedicoRepository repository;
 
+    public Medico findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
+    }
+
+    public List<Medico> listAll() {
+        return repository.findAll();
+    }
+
+    public Page<Medico> listPaginated(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
     @Transactional
-    public void cadastrar(MedicoDTO medico) {
-        repository.save(medico.toEntity());
+    public void create(Medico medico) {
+        repository.save(medico);
     }
 
 }

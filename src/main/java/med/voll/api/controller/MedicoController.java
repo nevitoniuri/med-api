@@ -4,14 +4,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.model.assembler.MedicoAssembler;
 import med.voll.api.model.dto.MedicoDTO;
+import med.voll.api.model.request.MedicoCreate;
+import med.voll.api.model.request.MedicoUpdate;
 import med.voll.api.service.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,20 +26,22 @@ public class MedicoController {
         return assembler.toDTO(service.findById(id));
     }
 
-    @GetMapping("all")
-    public List<MedicoDTO> listAll() {
-        return assembler.toDTO(service.listAll());
-    }
-
     @GetMapping
-    public Page<MedicoDTO> listPaginated(@PageableDefault(sort = "nome") Pageable pageable) {
-        return assembler.toDTO(service.listPaginated(pageable));
+    public Page<MedicoDTO> list(@PageableDefault(sort = "nome") Pageable pageable) {
+        return assembler.toDTO(service.list(pageable));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Valid MedicoDTO medico) {
-        service.create(assembler.toEntity(medico));
+    public void create(@RequestBody @Valid MedicoCreate medico) {
+        service.save(assembler.toEntity(medico));
+    }
+
+    @PutMapping("{id}")
+    public void update(@PathVariable Long id, @RequestBody @Valid MedicoUpdate medicoUpdate) {
+        var medico = service.findById(id);
+        assembler.updateEntity(medicoUpdate, medico);
+        service.save(medico);
     }
 
 }

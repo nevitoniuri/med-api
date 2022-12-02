@@ -2,15 +2,18 @@ package med.voll.api.model.assembler;
 
 import med.voll.api.model.Medico;
 import med.voll.api.model.dto.MedicoDTO;
+import med.voll.api.model.request.MedicoCreate;
+import med.voll.api.model.request.MedicoUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class MedicoAssembler {
 
-    public Medico toEntity(MedicoDTO medicoDTO) {
+    public Medico toEntity(MedicoCreate medicoDTO) {
         return Medico.builder()
                 .nome(medicoDTO.nome())
                 .crm(medicoDTO.crm())
@@ -21,8 +24,16 @@ public class MedicoAssembler {
                 .build();
     }
 
-    public List<MedicoDTO> toDTO(List<Medico> medicos) {
-        return medicos.stream().map(this::toDTO).toList();
+    public void updateEntity(MedicoUpdate medicoUpdate, Medico medico) {
+        if (Objects.nonNull(medicoUpdate.nome())) {
+            medico.setNome(medicoUpdate.nome());
+        }
+        if (Objects.nonNull(medicoUpdate.telefone())) {
+            medico.setTelefone(medicoUpdate.telefone());
+        }
+        if (Objects.nonNull(medicoUpdate.endereco())) {
+            medico.setEndereco(medicoUpdate.endereco());
+        }
     }
 
     public Page<MedicoDTO> toDTO(Page<Medico> medicos) {

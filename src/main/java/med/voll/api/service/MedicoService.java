@@ -21,16 +21,12 @@ public class MedicoService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
     }
 
-    public List<Medico> listAll() {
-        return repository.findAll();
-    }
-
-    public Page<Medico> listPaginated(Pageable pageable) {
+    public Page<Medico> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Transactional
-    public void create(Medico medico) {
+    public void save(Medico medico) {
         repository.save(medico);
     }
 

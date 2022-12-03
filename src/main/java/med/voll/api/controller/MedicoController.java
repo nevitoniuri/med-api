@@ -44,4 +44,16 @@ public class MedicoController {
         service.save(medico);
     }
 
+    @PutMapping("{id}/activate")
+    public void activate(@PathVariable Long id) {
+        var medico = service.findById(id);
+        service.activate(medico);
+    }
+
+    @PutMapping("{id}/deactivate")
+    public void deactivate(@PathVariable Long id) {
+        var medico = service.findById(id);
+        service.deactivate(medico);
+    }
+
 }

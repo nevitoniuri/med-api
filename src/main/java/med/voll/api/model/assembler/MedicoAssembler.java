@@ -7,7 +7,6 @@ import med.voll.api.model.request.MedicoUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -25,8 +24,8 @@ public class MedicoAssembler {
     }
 
     public void updateEntity(MedicoUpdate medicoUpdate, Medico medico) {
-        if (Objects.nonNull(medicoUpdate.nome())) {
-            medico.setNome(medicoUpdate.nome());
+        if (Objects.nonNull(medicoUpdate.email())) {
+            medico.setNome(medicoUpdate.email());
         }
         if (Objects.nonNull(medicoUpdate.telefone())) {
             medico.setTelefone(medicoUpdate.telefone());

@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class MedicoService {
@@ -22,11 +20,29 @@ public class MedicoService {
     }
 
     public Page<Medico> list(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByAtivoTrue(pageable);
     }
 
     @Transactional
     public void save(Medico medico) {
+        repository.save(medico);
+    }
+
+    @Transactional
+    public void activate(Medico medico) {
+        if (medico.isAtivo()) {
+            throw new IllegalArgumentException("Médico já está ativo");
+        }
+        medico.activate();
+        repository.save(medico);
+    }
+
+    @Transactional
+    public void deactivate(Medico medico) {
+        if (!medico.isAtivo()) {
+            throw new IllegalArgumentException("Médico já está inativo");
+        }
+        medico.deactivate();
         repository.save(medico);
     }
 

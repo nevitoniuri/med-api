@@ -1,6 +1,7 @@
 create table medicos
 (
     id            bigint       not null,
+    ativo         boolean      not null default true,
     nome          varchar(100) not null,
     crm           varchar(6)   not null,
     email         varchar(100) not null,

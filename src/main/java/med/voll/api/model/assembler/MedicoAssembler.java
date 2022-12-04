@@ -12,14 +12,14 @@ import java.util.Objects;
 @Component
 public class MedicoAssembler {
 
-    public Medico toEntity(MedicoCreate medicoDTO) {
+    public Medico toEntity(MedicoCreate medicoCreate) {
         return Medico.builder()
-                .nome(medicoDTO.nome())
-                .crm(medicoDTO.crm())
-                .email(medicoDTO.email())
-                .telefone(medicoDTO.telefone())
-                .especialidade(medicoDTO.especialidade())
-                .endereco(medicoDTO.endereco())
+                .nome(medicoCreate.nome())
+                .crm(medicoCreate.crm())
+                .email(medicoCreate.email())
+                .telefone(medicoCreate.telefone())
+                .especialidade(medicoCreate.especialidade())
+                .endereco(medicoCreate.endereco())
                 .build();
     }
 

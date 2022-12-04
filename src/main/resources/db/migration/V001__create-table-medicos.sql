@@ -16,6 +16,7 @@ create table medicos
     cep           varchar(8)   not null,
 
     constraint medicos_pk primary key (id),
+    constraint medicos_unique_nome unique (nome),
     constraint medicos_unique_crm unique (crm),
     constraint medicos_unique_email unique (email),
     constraint medicos_unique_telefone unique (telefone)

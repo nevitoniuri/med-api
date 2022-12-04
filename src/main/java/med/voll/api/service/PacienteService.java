@@ -28,4 +28,21 @@ public class PacienteService {
         repository.save(paciente);
     }
 
+    @Transactional
+    public void activate(Paciente paciente) {
+        if (paciente.isAtivo()) {
+            throw new IllegalArgumentException("Paciente já está ativo");
+        }
+        paciente.activate();
+        save(paciente);
+    }
+
+    @Transactional
+    public void deactivate(Paciente paciente) {
+        if (!paciente.isAtivo()) {
+            throw new IllegalArgumentException("Paciente já está inativo");
+        }
+        paciente.deactivate();
+        save(paciente);
+    }
 }

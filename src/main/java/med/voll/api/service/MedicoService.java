@@ -34,7 +34,7 @@ public class MedicoService {
             throw new IllegalArgumentException("Médico já está ativo");
         }
         medico.activate();
-        repository.save(medico);
+        save(medico);
     }
 
     @Transactional
@@ -43,7 +43,11 @@ public class MedicoService {
             throw new IllegalArgumentException("Médico já está inativo");
         }
         medico.deactivate();
-        repository.save(medico);
+        save(medico);
     }
 
+    public Medico findAvailable() {
+        return repository.findFirstByAtivoTrue().orElseThrow(
+                () -> new ResourceNotFoundException("Médico não encontrado"));
+    }
 }

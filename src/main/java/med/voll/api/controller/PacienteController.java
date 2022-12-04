@@ -43,4 +43,16 @@ public class PacienteController {
         service.save(paciente);
     }
 
+    @PutMapping("{id}/activate")
+    public void activate(@PathVariable Long id) {
+        var paciente = service.findById(id);
+        service.activate(paciente);
+    }
+
+    @PutMapping("{id}/deactivate")
+    public void deactivate(@PathVariable Long id) {
+        var paciente = service.findById(id);
+        service.deactivate(paciente);
+    }
+
 }

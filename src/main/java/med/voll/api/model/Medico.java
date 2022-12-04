@@ -4,43 +4,31 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "medicos")
-public class Medico {
+public class Medico extends Cadastro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
-    @Setter
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
-    @Setter
+    @Column(name = "crm", nullable = false, unique = true)
     private String crm;
-    @Setter
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Setter
+    @Column(name = "telefone", nullable = false, unique = true)
     private String telefone;
-    @Setter
     @Enumerated(EnumType.STRING)
+    @Column(name = "especialidade", nullable = false)
     private Especialidade especialidade;
-    @Setter
     @Embedded
     private Endereco endereco;
-    private boolean ativo;
-
-    @PrePersist
-    public void prePersist() {
-        this.ativo = Boolean.TRUE;
-    }
-
-    public void activate() {
-        this.ativo = Boolean.TRUE;
-    }
-
-    public void deactivate() {
-        this.ativo = Boolean.FALSE;
-    }
 
 }

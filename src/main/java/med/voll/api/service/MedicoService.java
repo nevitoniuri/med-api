@@ -3,6 +3,7 @@ package med.voll.api.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.exception.ResourceNotFoundException;
+import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,11 @@ public class MedicoService {
 
     public Medico findAvailable() {
         return repository.findFirstByAtivoTrue().orElseThrow(
+                () -> new ResourceNotFoundException("Médico não encontrado"));
+    }
+
+    public Medico findAvailableByEspecialidade(Especialidade especialidade) {
+        return repository.findFirstByAtivoTrueAndEspecialidade(especialidade).orElseThrow(
                 () -> new ResourceNotFoundException("Médico não encontrado"));
     }
 }

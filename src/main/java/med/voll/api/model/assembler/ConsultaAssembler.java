@@ -23,10 +23,11 @@ public class ConsultaAssembler {
                 .paciente(pacienteService.findById(consultaCreate.pacienteId()))
                 .dataHora(LocalDateTime.parse(consultaCreate.dataHora(),
                         DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
+                .dataHoraCriacao(LocalDateTime.now())
                 .build();
 
         if (Objects.isNull(consultaCreate.medicoId())) {
-            consulta.setMedico(medicoService.findAvailable());
+            consulta.setMedico(medicoService.findAvailableByEspecialidade(consultaCreate.especialidade()));
         }
         return consulta;
     }

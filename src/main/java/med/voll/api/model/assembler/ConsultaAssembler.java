@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 @Component
@@ -19,16 +20,27 @@ public class ConsultaAssembler {
     private final PacienteService pacienteService;
 
     public Consulta toEntity(ConsultaCreate consultaCreate) {
+        var paciente = pacienteService.findById(consultaCreate.pacienteId());
+        var date = LocalDateTime.parse(consultaCreate.dataHora(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).truncatedTo(ChronoUnit.HOURS);
         var consulta = Consulta.builder()
-                .paciente(pacienteService.findById(consultaCreate.pacienteId()))
-                .dataHora(LocalDateTime.parse(consultaCreate.dataHora(),
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
+                .paciente(paciente)
+                .dataHora(date)
                 .dataHoraCriacao(LocalDateTime.now())
                 .build();
 
-        if (Objects.isNull(consultaCreate.medicoId())) {
-            consulta.setMedico(medicoService.findAvailableByEspecialidade(consultaCreate.especialidade()));
+        if (isRequestInvalid(consultaCreate)) {
+            throw new IllegalArgumentException("Request inválido");
+        }
+
+        if (Objects.nonNull(consultaCreate.medicoId())) {
+            consulta.setMedico(medicoService.findById(consultaCreate.medicoId()));
+        } else {
+            consulta.setMedico(medicoService.findAvailableByEspecialidadeAndDataHora(consultaCreate.especialidade(), consulta.getDataHora()));
         }
         return consulta;
+    }
+
+    public boolean isRequestInvalid(ConsultaCreate consultaCreate) {
+        return Objects.isNull(consultaCreate.medicoId()) && Objects.isNull(consultaCreate.especialidade());
     }
 }

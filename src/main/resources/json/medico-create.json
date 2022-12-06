@@ -1,0 +1,34 @@
+[
+  {
+    "nome": "João",
+    "crm": "123452",
+    "email": "joao@voll.med",
+    "telefone": "88277700833",
+    "especialidade": 1,
+    "endereco": {
+      "logradouro": "Rua Valdemar Figueiredo",
+      "numero": "633",
+      "bairro": "Mondubim",
+      "cep": "60711515",
+      "cidade": "Fortaleza",
+      "uf": "CE",
+      "complemento": "Casa"
+    }
+  },
+  {
+    "nome": "Larissa Marina Pires",
+    "crm": "463895",
+    "email": "larissa.marina@voll.med",
+    "telefone": "85998028684",
+    "especialidade": 1,
+    "endereco": {
+      "logradouro": "Rua Joaquim Martins",
+      "numero": "749",
+      "bairro": "Passaré",
+      "cep": "60744012",
+      "cidade": "Fortaleza",
+      "uf": "CE",
+      "complemento": "Casa"
+    }
+  }
+]

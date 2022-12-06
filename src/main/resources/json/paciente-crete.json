@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "Analu Clarice Rocha",
+    "cpf": "62973632340",
+    "email": "analuclaricerocha@danzarin.com.br",
+    "telefone": "85995205469",
+    "endereco": {
+      "logradouro": "Rua Bangu",
+      "numero": "928",
+      "bairro": "Pici",
+      "cep": "60510590",
+      "cidade": "Fortaleza",
+      "uf": "CE",
+      "complemento": "AP 203"
+    }
+  },
+  {
+    "nome": "Alice Patrícia Heloisa Aragão",
+    "cpf": "97283692398",
+    "email": "alice-aragao91@michaelpage.com.br",
+    "telefone": "85981481351",
+    "endereco": {
+      "logradouro": "Rua Esperança",
+      "numero": "613",
+      "bairro": "Jardim das Oliveiras",
+      "cep": "60821060",
+      "cidade": "Fortaleza",
+      "uf": "CE",
+      "complemento": "Casa"
+    }
+  }
+]

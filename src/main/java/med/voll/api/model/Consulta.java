@@ -29,4 +29,5 @@ public class Consulta {
     private LocalDateTime dataHora;
     @Column(name = "data_hora_criacao", nullable = false)
     private LocalDateTime dataHoraCriacao;
+
 }

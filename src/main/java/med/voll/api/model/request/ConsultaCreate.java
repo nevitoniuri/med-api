@@ -11,6 +11,6 @@ public record ConsultaCreate(
         @NotNull
         Long pacienteId,
         @NotBlank
-        @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         String dataHora) {
 }

@@ -23,9 +23,10 @@ public class MedicoAssembler {
                 .build();
     }
 
+    //TODO: como refatorar?
     public void updateEntity(MedicoUpdate medicoUpdate, Medico medico) {
-        if (Objects.nonNull(medicoUpdate.email())) {
-            medico.setNome(medicoUpdate.email());
+        if (Objects.nonNull(medicoUpdate.nome())) {
+            medico.setNome(medicoUpdate.nome());
         }
         if (Objects.nonNull(medicoUpdate.telefone())) {
             medico.setTelefone(medicoUpdate.telefone());

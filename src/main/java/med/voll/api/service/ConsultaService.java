@@ -24,6 +24,7 @@ public class ConsultaService {
         return repository.existsByMedicoIdAndDataHora(medicoId, dataHora);
     }
 
+    //TODO: como refatorar?
     public void checkValid(Consulta consulta) {
 
         if (!consulta.getPaciente().isAtivo()) {

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -52,11 +54,15 @@ public class MedicoService {
 
     public Medico findAvailableByEspecialidadeAndDataHora(Especialidade especialidade, LocalDateTime dataHora) {
         var medicos = repository.findAllByAtivoTrueAndEspecialidade(especialidade);
-        return medicos.stream()
-                .sorted()
+        Collections.shuffle(medicos);
+        var medicosDisponiveis = medicos.stream()
                 .filter(medico -> isAvailableInDataHora(medico, dataHora))
-                .findAny()
-                .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
+                .toList();
+        if (medicosDisponiveis.isEmpty()) {
+            throw new ResourceNotFoundException("Médico não encontrado");
+        }
+        var random = new Random();
+        return medicosDisponiveis.get(random.nextInt(medicosDisponiveis.size()));
     }
 
     public boolean isAvailableInDataHora(Medico medico, LocalDateTime dataHora) {

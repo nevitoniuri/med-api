@@ -3,8 +3,6 @@ package med.voll.api.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Comparator;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +11,7 @@ import java.util.Comparator;
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "medicos")
-public class Medico implements Comparable<Medico> {
+public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -48,8 +46,4 @@ public class Medico implements Comparable<Medico> {
         this.ativo = Boolean.FALSE;
     }
 
-    @Override
-    public int compareTo(Medico medico) {
-        return Comparator.comparing(Medico::getNome).thenComparing(Medico::getCrm).compare(this, medico);
-    }
 }

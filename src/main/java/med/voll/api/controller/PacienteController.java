@@ -1,10 +1,10 @@
 package med.voll.api.controller;
 
 import lombok.RequiredArgsConstructor;
-import med.voll.api.model.assembler.PacienteAssembler;
-import med.voll.api.model.dto.PacienteDTO;
-import med.voll.api.model.request.PacienteCreate;
-import med.voll.api.model.request.PacienteUpdate;
+import med.voll.api.controller.assembler.PacienteAssembler;
+import med.voll.api.controller.response.PacienteDTO;
+import med.voll.api.controller.request.PacienteCreate;
+import med.voll.api.controller.request.PacienteUpdate;
 import med.voll.api.service.PacienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +37,7 @@ public class PacienteController {
     }
 
     @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Long id, @RequestBody PacienteUpdate pacienteUpdate) {
         var paciente = service.findById(id);
         assembler.updateEntity(pacienteUpdate, paciente);

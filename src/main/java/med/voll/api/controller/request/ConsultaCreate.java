@@ -1,4 +1,4 @@
-package med.voll.api.model.request;
+package med.voll.api.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;

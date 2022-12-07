@@ -1,4 +1,4 @@
-package med.voll.api.model.dto;
+package med.voll.api.controller.response;
 
 import lombok.Builder;
 import med.voll.api.model.Endereco;

@@ -2,6 +2,7 @@ package med.voll.api.service;
 
 import lombok.RequiredArgsConstructor;
 import med.voll.api.exception.InvalidDataException;
+import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Consulta;
 import med.voll.api.repository.ConsultaRepository;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ import java.time.LocalDateTime;
 public class ConsultaService {
 
     private final ConsultaRepository repository;
+
+    public Consulta findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada"));
+    }
 
     public void create(Consulta consulta) {
         checkValid(consulta);

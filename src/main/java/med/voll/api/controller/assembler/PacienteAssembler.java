@@ -1,9 +1,9 @@
-package med.voll.api.model.assembler;
+package med.voll.api.controller.assembler;
 
 import med.voll.api.model.Paciente;
-import med.voll.api.model.dto.PacienteDTO;
-import med.voll.api.model.request.PacienteCreate;
-import med.voll.api.model.request.PacienteUpdate;
+import med.voll.api.controller.response.PacienteDTO;
+import med.voll.api.controller.request.PacienteCreate;
+import med.voll.api.controller.request.PacienteUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 

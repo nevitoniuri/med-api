@@ -19,6 +19,9 @@ public class Consulta {
     @Setter(AccessLevel.NONE)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusConsulta status;
     @ManyToOne
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
@@ -29,5 +32,8 @@ public class Consulta {
     private LocalDateTime dataHora;
     @Column(name = "data_hora_criacao", nullable = false)
     private LocalDateTime dataHoraCriacao;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "motivo_cancelamento")
+    private MotivoCancelamento motivoCancelamento;
 
 }

@@ -1,7 +1,6 @@
-package med.voll.api.model.request;
+package med.voll.api.controller.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import med.voll.api.model.Endereco;
 

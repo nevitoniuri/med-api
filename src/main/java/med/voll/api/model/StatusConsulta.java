@@ -5,13 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Especialidade {
-    ORTOPEDIA(1L, "Ortopedia"),
-    CARDIOLOGIA(2L, "Cardiologia"),
-    GINECOLOGIA(3L, "Ginecologia"),
-    DERMATOLOGIA(4L, "Dermatologia");
+public enum StatusConsulta {
+    AGENDADA(1L, "Agendada"),
+    REAGENDADA(2L, "Reagendada"),
+    REALIZADA(3L, "Realizada"),
+    CANCELADA(4L, "Cancelada");
 
     private final Long id;
     private final String descricao;
-
 }

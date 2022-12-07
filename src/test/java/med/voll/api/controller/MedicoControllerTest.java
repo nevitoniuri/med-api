@@ -1,35 +1,62 @@
 package med.voll.api.controller;
 
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import med.voll.api.controller.response.MedicoDTO;
+import med.voll.api.repository.MedicoRepository;
+import med.voll.api.service.MedicoService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.context.jdbc.Sql;
 
-@ExtendWith({SpringExtension.class, MockitoExtension.class})
-@SpringBootTest(classes = {MedicoController.class})
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureMockMvc
-public class MedicoControllerTest {
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@Sql(scripts = {"classpath:sql/limpar-tabelas.sql",
+        "classpath:sql/medicos-inserts.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//@Sql(scripts = "classpath:sql/medicos-inserts.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+class MedicoControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MedicoService service;
+    @Autowired
+    private MedicoRepository repository;
 
     @Test
     @Order(1)
     @SneakyThrows
-    @DisplayName("Deve cadastrar um novo médico")
-    public void deveCriarMedico() {
-        var request = MockMvcRequestBuilders
-                .get("/medicos")
-                .accept(MediaType.APPLICATION_JSON);
+    @DisplayName("Deve listar medicos ativos, ordenados por nome")
+    public void deveListarMedicosAtivos() {
+        var request = get("/medicos").accept(MediaType.APPLICATION_JSON);
 
-        mockMvc.perform(request);
+        mockMvc.perform(request)
+                .andDo(payloadExtractor)
+                .andExpect(status().isOk())
+                .andReturn();
+        var medicos = payloadExtractor.asListOf(MedicoDTO.class, true);
+        assertEquals(3, medicos.size());
     }
+
+    @Test
+    @Order(2)
+    @SneakyThrows
+    @DisplayName("Deve buscar medico por id")
+    public void deveBuscarMedicoPorId() {
+        var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
+        var request = get("/medicos/" + id).accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andDo(payloadExtractor)
+                .andExpect(status().isOk())
+                .andReturn();
+        var medico = payloadExtractor.as(MedicoDTO.class);
+        assertEquals("Maria Silva", medico.nome());
+    }
+
+    
 }

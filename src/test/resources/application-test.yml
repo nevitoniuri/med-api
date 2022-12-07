@@ -7,3 +7,15 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  devtools:
+    add-properties: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lab:
+            non_contextual_creation: true
+          temp:
+            use_jdbc_metadata_defaults: false

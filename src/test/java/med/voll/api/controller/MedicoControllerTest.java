@@ -1,9 +1,13 @@
 package med.voll.api.controller;
 
 import lombok.SneakyThrows;
+import med.voll.api.controller.request.MedicoCreate;
+import med.voll.api.controller.request.MedicoUpdate;
 import med.voll.api.controller.response.MedicoDTO;
+import med.voll.api.model.Endereco;
+import med.voll.api.model.Especialidade;
+import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
-import med.voll.api.service.MedicoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,28 +15,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static med.voll.api.common.ControllerURIs.DEACTIVATE;
+import static med.voll.api.common.ControllerURIs.MEDICOS;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql(scripts = {"classpath:sql/limpar-tabelas.sql",
         "classpath:sql/medicos-inserts.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//@Sql(scripts = "classpath:sql/medicos-inserts.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class MedicoControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    private MedicoService service;
     @Autowired
     private MedicoRepository repository;
 
     @Test
     @Order(1)
     @SneakyThrows
+    @DisplayName("Deve buscar medico por id")
+    void deveBuscarMedicoPorId() {
+        var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
+        var request = get(MEDICOS + "/" + id).accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andDo(payloadExtractor)
+                .andExpect(status().isOk())
+                .andReturn();
+        var medico = payloadExtractor.as(MedicoDTO.class);
+        assertEquals("Maria Silva", medico.nome());
+    }
+
+    @Test
+    @Order(2)
+    @SneakyThrows
     @DisplayName("Deve listar medicos ativos, ordenados por nome")
-    public void deveListarMedicosAtivos() {
-        var request = get("/medicos").accept(MediaType.APPLICATION_JSON);
+    void deveListarMedicosAtivos() {
+        var request = get(MEDICOS).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                 .andDo(payloadExtractor)
@@ -43,20 +60,78 @@ class MedicoControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     @SneakyThrows
-    @DisplayName("Deve buscar medico por id")
-    public void deveBuscarMedicoPorId() {
-        var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
-        var request = get("/medicos/" + id).accept(MediaType.APPLICATION_JSON);
+    @DisplayName("Deve criar um novo medico")
+    public void deveCriarNovoMedico() {
+        var medicoCreate = MedicoCreate.builder()
+                .nome("Cláudio Nelson Rezende")
+                .crm("788401")
+                .email("claudio.rezende@voll.med")
+                .telefone("85983475185")
+                .especialidade(Especialidade.ORTOPEDIA)
+                .endereco(Endereco.builder()
+                        .logradouro("Rua das Flores")
+                        .numero("123")
+                        .complemento("Apto 101")
+                        .bairro("Centro")
+                        .cidade("Fortaleza")
+                        .uf("CE")
+                        .cep("60000000")
+                        .build())
+                .build();
+
+        var request = post(MEDICOS)
+                .content(json(medicoCreate))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
-                .andDo(payloadExtractor)
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
-        var medico = payloadExtractor.as(MedicoDTO.class);
-        assertEquals("Maria Silva", medico.nome());
+
+        Medico medicoCriado = repository.findAll().stream().filter(m -> m.getCrm().equals("788401")).iterator().next();
+        assertNotNull(medicoCriado);
+        assertEquals("Cláudio Nelson Rezende", medicoCriado.getNome());
     }
 
-    
+    @Test
+    @Order(4)
+    @SneakyThrows
+    @DisplayName("Deve atualizar um medico")
+    void deveAtualizarMedico() {
+        var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
+        var medicoUpdate = MedicoUpdate.builder()
+                .nome("Maria da Silva")
+                .telefone("85983475185")
+                .build();
+
+        var request = put(MEDICOS + "/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json(medicoUpdate));
+
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        var medicoAtualizado = repository.findById(id).stream().iterator().next();
+        assertEquals("Maria da Silva", medicoAtualizado.getNome());
+    }
+
+    @Test
+    @Order(5)
+    @SneakyThrows
+    @DisplayName("Deve desativar um medico")
+    void deveDesativarMedico() {
+        var id = repository.findAll().stream().filter(m -> m.getCrm().equals("152390")).iterator().next().getId();
+        var request = put(MEDICOS + "/" + id + DEACTIVATE).accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var medicoDesativado = repository.findById(id).stream().iterator().next();
+        assertFalse(medicoDesativado.isAtivo());
+    }
 }

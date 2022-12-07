@@ -1,8 +1,9 @@
-package med.voll.api.controller;
+package med.voll.api.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.jayway.jsonpath.JsonPath;
+import lombok.NonNull;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 
@@ -20,7 +21,7 @@ public class PayloadExtractor implements ResultHandler {
     }
 
     @Override
-    public void handle(MvcResult result) {
+    public void handle(@NonNull MvcResult result) {
         this.result = result;
     }
 

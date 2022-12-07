@@ -1,6 +1,6 @@
 package med.voll.api.common;
 
-public class ControllerURIs {
+public final class ControllerURIs {
     public static final String MEDICOS = "/medicos";
     public static final String PACIENTES = "/pacientes";
     public static final String CONSULTAS = "/consultas";

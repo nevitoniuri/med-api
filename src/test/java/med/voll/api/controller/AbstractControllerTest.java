@@ -1,6 +1,7 @@
 package med.voll.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import med.voll.api.common.PayloadExtractor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;
@@ -32,7 +33,7 @@ public abstract class AbstractControllerTest {
     @Autowired
     protected ObjectMapper jsonMapper;
     protected PayloadExtractor payloadExtractor;
-    protected HttpMessageConverter mappingJackson2HttpMessageConverter;
+    protected HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 
     @BeforeEach
     public void setup() {
@@ -40,7 +41,7 @@ public abstract class AbstractControllerTest {
     }
 
     @Autowired
-    protected void setConverters(HttpMessageConverter<?>[] converters) {
+    protected void setConverters(HttpMessageConverter<Object>[] converters) {
         this.mappingJackson2HttpMessageConverter = Arrays.stream(converters)
                 .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()

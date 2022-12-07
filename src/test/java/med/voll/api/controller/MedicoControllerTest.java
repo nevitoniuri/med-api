@@ -8,6 +8,7 @@ import med.voll.api.model.Endereco;
 import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
-import static med.voll.api.common.ControllerURIs.DEACTIVATE;
-import static med.voll.api.common.ControllerURIs.MEDICOS;
+import static med.voll.api.common.ControllerURIs.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,6 +27,20 @@ class MedicoControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MedicoRepository repository;
+    Endereco enderecoMock;
+
+    @BeforeEach
+    void setUp() {
+        enderecoMock = Endereco.builder()
+                .logradouro("Rua das Flores")
+                .numero("123")
+                .complemento("Apto 101")
+                .bairro("Centro")
+                .cidade("Fortaleza")
+                .uf("CE")
+                .cep("60000000")
+                .build();
+    }
 
     @Test
     @Order(1)
@@ -70,15 +84,7 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .email("claudio.rezende@voll.med")
                 .telefone("85983475185")
                 .especialidade(Especialidade.ORTOPEDIA)
-                .endereco(Endereco.builder()
-                        .logradouro("Rua das Flores")
-                        .numero("123")
-                        .complemento("Apto 101")
-                        .bairro("Centro")
-                        .cidade("Fortaleza")
-                        .uf("CE")
-                        .cep("60000000")
-                        .build())
+                .endereco(enderecoMock)
                 .build();
 
         var request = post(MEDICOS)
@@ -104,6 +110,7 @@ class MedicoControllerTest extends AbstractControllerTest {
         var medicoUpdate = MedicoUpdate.builder()
                 .nome("Maria da Silva")
                 .telefone("85983475185")
+                .endereco(enderecoMock)
                 .build();
 
         var request = put(MEDICOS + "/" + id)
@@ -117,6 +124,7 @@ class MedicoControllerTest extends AbstractControllerTest {
 
         var medicoAtualizado = repository.findById(id).stream().iterator().next();
         assertEquals("Maria da Silva", medicoAtualizado.getNome());
+        assertEquals(enderecoMock.getLogradouro(), medicoAtualizado.getEndereco().getLogradouro());
     }
 
     @Test
@@ -124,14 +132,32 @@ class MedicoControllerTest extends AbstractControllerTest {
     @SneakyThrows
     @DisplayName("Deve desativar um medico")
     void deveDesativarMedico() {
-        var id = repository.findAll().stream().filter(m -> m.getCrm().equals("152390")).iterator().next().getId();
-        var request = put(MEDICOS + "/" + id + DEACTIVATE).accept(MediaType.APPLICATION_JSON);
+        var medico = repository.findAll().stream().filter(m -> m.getCrm().equals("152390")).iterator().next();
+        assertTrue(medico.isAtivo());
+        var request = put(MEDICOS + "/" + medico.getId() + DEACTIVATE).accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var medicoDesativado = repository.findById(id).stream().iterator().next();
+        var medicoDesativado = repository.findById(medico.getId()).stream().iterator().next();
         assertFalse(medicoDesativado.isAtivo());
+    }
+
+    @Test
+    @Order(6)
+    @SneakyThrows
+    @DisplayName("Deve ativar um medico")
+    void deveAtivarMedico() {
+        var medico = repository.findAll().stream().filter(m -> m.getCrm().equals("152391")).iterator().next();
+        assertFalse(medico.isAtivo());
+        var request = put(MEDICOS + "/" + medico.getId() + ACTIVATE).accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var medicoAtivado = repository.findById(medico.getId()).stream().iterator().next();
+        assertTrue(medicoAtivado.isAtivo());
     }
 }

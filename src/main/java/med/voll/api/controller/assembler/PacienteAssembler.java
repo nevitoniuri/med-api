@@ -19,6 +19,7 @@ public class PacienteAssembler {
     public PacienteDTO toDTO(Paciente paciente) {
         return PacienteDTO.builder()
                 .id(paciente.getId())
+                .ativo(paciente.isAtivo())
                 .nome(paciente.getNome())
                 .cpf(paciente.getCpf())
                 .email(paciente.getEmail())

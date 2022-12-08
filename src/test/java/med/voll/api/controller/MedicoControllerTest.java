@@ -4,11 +4,9 @@ import lombok.SneakyThrows;
 import med.voll.api.controller.request.MedicoCreate;
 import med.voll.api.controller.request.MedicoUpdate;
 import med.voll.api.controller.response.MedicoDTO;
-import med.voll.api.model.Endereco;
 import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -27,35 +25,23 @@ class MedicoControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MedicoRepository repository;
-    Endereco enderecoMock;
-
-    @BeforeEach
-    void setUp() {
-        enderecoMock = Endereco.builder()
-                .logradouro("Rua das Flores")
-                .numero("123")
-                .complemento("Apto 101")
-                .bairro("Centro")
-                .cidade("Fortaleza")
-                .uf("CE")
-                .cep("60000000")
-                .build();
-    }
 
     @Test
     @Order(1)
     @SneakyThrows
     @DisplayName("Deve buscar medico por id")
     void deveBuscarMedicoPorId() {
-        var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
-        var request = get(MEDICOS + "/" + id).accept(MediaType.APPLICATION_JSON);
+        var crm = "152390";
+        var id = repository.findAll().stream().filter(m -> m.getCrm().equals(crm)).iterator().next().getId();
 
+        var request = get(MEDICOS + "/" + id).accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andDo(payloadExtractor)
                 .andExpect(status().isOk())
                 .andReturn();
+
         var medico = payloadExtractor.as(MedicoDTO.class);
-        assertEquals("Maria Silva", medico.nome());
+        assertEquals(crm, medico.crm());
     }
 
     @Test
@@ -64,12 +50,13 @@ class MedicoControllerTest extends AbstractControllerTest {
     @DisplayName("Deve listar medicos ativos, ordenados por nome")
     void deveListarMedicosAtivos() {
         var request = get(MEDICOS).accept(MediaType.APPLICATION_JSON);
-
         mockMvc.perform(request)
                 .andDo(payloadExtractor)
                 .andExpect(status().isOk())
                 .andReturn();
+
         var medicos = payloadExtractor.asListOf(MedicoDTO.class, true);
+        medicos.forEach(m -> assertTrue(m.ativo()));
         assertEquals(3, medicos.size());
     }
 
@@ -77,7 +64,7 @@ class MedicoControllerTest extends AbstractControllerTest {
     @Order(3)
     @SneakyThrows
     @DisplayName("Deve criar um novo medico")
-    public void deveCriarNovoMedico() {
+    void deveCriarNovoMedico() {
         var medicoCreate = MedicoCreate.builder()
                 .nome("Cláudio Nelson Rezende")
                 .crm("788401")
@@ -91,14 +78,17 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .content(json(medicoCreate))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
-
         mockMvc.perform(request)
                 .andExpect(status().isCreated())
                 .andReturn();
 
-        Medico medicoCriado = repository.findAll().stream().filter(m -> m.getCrm().equals("788401")).iterator().next();
-        assertNotNull(medicoCriado);
-        assertEquals("Cláudio Nelson Rezende", medicoCriado.getNome());
+        var medico = repository.findAll().stream().filter(m -> m.getCrm().equals(medicoCreate.crm())).iterator().next();
+        assertEquals(medicoCreate.nome(), medico.getNome());
+        assertEquals(medicoCreate.crm(), medico.getCrm());
+        assertEquals(medicoCreate.email(), medico.getEmail());
+        assertEquals(medicoCreate.telefone(), medico.getTelefone());
+        assertEquals(medicoCreate.especialidade(), medico.getEspecialidade());
+        assertEquals(medicoCreate.endereco().getLogradouro(), medico.getEndereco().getLogradouro());
     }
 
     @Test
@@ -117,7 +107,6 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json(medicoUpdate));
-
         mockMvc.perform(request)
                 .andExpect(status().isNoContent())
                 .andReturn();
@@ -134,10 +123,10 @@ class MedicoControllerTest extends AbstractControllerTest {
     void deveDesativarMedico() {
         var medico = repository.findAll().stream().filter(m -> m.getCrm().equals("152390")).iterator().next();
         assertTrue(medico.isAtivo());
-        var request = put(MEDICOS + "/" + medico.getId() + DEACTIVATE).accept(MediaType.APPLICATION_JSON);
 
+        var request = put(MEDICOS + "/" + medico.getId() + DEACTIVATE).accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn();
 
         var medicoDesativado = repository.findById(medico.getId()).stream().iterator().next();
@@ -151,10 +140,10 @@ class MedicoControllerTest extends AbstractControllerTest {
     void deveAtivarMedico() {
         var medico = repository.findAll().stream().filter(m -> m.getCrm().equals("152391")).iterator().next();
         assertFalse(medico.isAtivo());
-        var request = put(MEDICOS + "/" + medico.getId() + ACTIVATE).accept(MediaType.APPLICATION_JSON);
 
+        var request = put(MEDICOS + "/" + medico.getId() + ACTIVATE).accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn();
 
         var medicoAtivado = repository.findById(medico.getId()).stream().iterator().next();

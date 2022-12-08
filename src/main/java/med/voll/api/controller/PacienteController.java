@@ -25,6 +25,7 @@ public class PacienteController {
         return assembler.toDTO(service.findById(id));
     }
 
+    //TODO: add query params
     @GetMapping
     public Page<PacienteDTO> list(@PageableDefault(sort = "nome") Pageable pageable) {
         return assembler.toDTO(service.list(pageable));
@@ -45,12 +46,14 @@ public class PacienteController {
     }
 
     @PutMapping("{id}/activate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void activate(@PathVariable Long id) {
         var paciente = service.findById(id);
         service.activate(paciente);
     }
 
     @PutMapping("{id}/deactivate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable Long id) {
         var paciente = service.findById(id);
         service.deactivate(paciente);

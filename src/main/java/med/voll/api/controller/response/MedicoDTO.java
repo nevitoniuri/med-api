@@ -5,6 +5,6 @@ import med.voll.api.model.Endereco;
 import med.voll.api.model.Especialidade;
 
 @Builder
-public record MedicoDTO(Long id, String nome, String crm, String email, String telefone, Especialidade especialidade,
+public record MedicoDTO(Long id, boolean ativo, String nome, String crm, String email, String telefone, Especialidade especialidade,
                         Endereco endereco) {
 }

@@ -20,7 +20,7 @@ public class PacienteService {
     }
 
     public Page<Paciente> list(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByAtivoTrue(pageable);
     }
 
     @Transactional

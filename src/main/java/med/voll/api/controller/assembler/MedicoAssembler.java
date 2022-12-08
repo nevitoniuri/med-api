@@ -43,6 +43,7 @@ public class MedicoAssembler {
     public MedicoDTO toDTO(Medico medico) {
         return MedicoDTO.builder()
                 .id(medico.getId())
+                .ativo(medico.isAtivo())
                 .nome(medico.getNome())
                 .crm(medico.getCrm())
                 .email(medico.getEmail())

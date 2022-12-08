@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import med.voll.api.common.PayloadExtractor;
+import med.voll.api.model.Endereco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;
@@ -34,10 +35,21 @@ public abstract class AbstractControllerTest {
     protected ObjectMapper jsonMapper;
     protected PayloadExtractor payloadExtractor;
     protected HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
+    Endereco enderecoMock;
 
     @BeforeEach
     public void setup() {
         payloadExtractor = new PayloadExtractor(jsonMapper);
+
+        enderecoMock = Endereco.builder()
+                .logradouro("Rua das Flores")
+                .numero("123")
+                .complemento("Apto 101")
+                .bairro("Centro")
+                .cidade("Fortaleza")
+                .uf("CE")
+                .cep("60000000")
+                .build();
     }
 
     @Autowired

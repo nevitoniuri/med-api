@@ -30,6 +30,7 @@ public class ConsultaController {
         service.create(consulta);
     }
 
+    //TODO: Mudar implementação, para evitar 2 métodos com a mesma assinatura
     @PutMapping("{id}/cancelar")
     public void cancelar(@PathVariable Long id, @RequestBody @Valid ConsultaUpdate consultaUpdate) {
         var consulta = service.findById(id);

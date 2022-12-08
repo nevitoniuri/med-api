@@ -27,6 +27,7 @@ public class MedicoController {
         return assembler.toDTO(service.findById(id));
     }
 
+    //TODO: add query params
     @GetMapping
     public Page<MedicoDTO> list(@PageableDefault(sort = "nome") Pageable pageable) {
         return assembler.toDTO(service.list(pageable));
@@ -47,12 +48,14 @@ public class MedicoController {
     }
 
     @PutMapping(ID_ACTIVATE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void activate(@PathVariable Long id) {
         var medico = service.findById(id);
         service.activate(medico);
     }
 
     @PutMapping(ID_DEACTIVATE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable Long id) {
         var medico = service.findById(id);
         service.deactivate(medico);

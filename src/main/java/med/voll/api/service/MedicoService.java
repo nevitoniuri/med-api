@@ -2,6 +2,7 @@ package med.voll.api.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
@@ -10,9 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,7 @@ public class MedicoService {
         save(medico);
     }
 
+    @SneakyThrows
     public Medico findAvailableByEspecialidadeAndDataHora(Especialidade especialidade, LocalDateTime dataHora) {
         var medicos = repository.findAllByAtivoTrueAndEspecialidade(especialidade);
         Collections.shuffle(medicos);
@@ -61,8 +63,8 @@ public class MedicoService {
         if (medicosDisponiveis.isEmpty()) {
             throw new ResourceNotFoundException("Médico não encontrado");
         }
-        var random = new Random();
-        return medicosDisponiveis.get(random.nextInt(medicosDisponiveis.size()));
+        var rand = SecureRandom.getInstanceStrong();
+        return medicosDisponiveis.get(rand.nextInt(medicosDisponiveis.size()));
     }
 
     public boolean isAvailableInDataHora(Medico medico, LocalDateTime dataHora) {

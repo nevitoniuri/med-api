@@ -5,7 +5,6 @@ import med.voll.api.controller.request.MedicoCreate;
 import med.voll.api.controller.request.MedicoUpdate;
 import med.voll.api.controller.response.MedicoDTO;
 import med.voll.api.model.Especialidade;
-import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;

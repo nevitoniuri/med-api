@@ -5,8 +5,8 @@ import med.voll.api.model.Consulta;
 import med.voll.api.model.StatusConsulta;
 import med.voll.api.controller.request.ConsultaCreate;
 import med.voll.api.controller.request.ConsultaUpdate;
-import med.voll.api.service.MedicoService;
-import med.voll.api.service.PacienteService;
+import med.voll.api.service.impl.MedicoServiceImpl;
+import med.voll.api.service.impl.PacienteServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -18,8 +18,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ConsultaAssembler {
 
-    private final MedicoService medicoService;
-    private final PacienteService pacienteService;
+    private final MedicoServiceImpl medicoService;
+    private final PacienteServiceImpl pacienteService;
 
     public Consulta toEntity(ConsultaCreate consultaCreate) {
         var paciente = pacienteService.findById(consultaCreate.pacienteId());

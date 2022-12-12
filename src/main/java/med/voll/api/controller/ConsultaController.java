@@ -23,14 +23,14 @@ public class ConsultaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody @Valid ConsultaCreate consulta) {
-        service.create(assembler.toEntity(consulta));
+        service.save(assembler.toEntity(consulta));
     }
 
     @PutMapping(ID)
     public void reagendar(@PathVariable Long id, @RequestBody @Valid ConsultaUpdate consultaUpdate) {
         var consulta = service.findById(id);
         assembler.updateEntity(consultaUpdate, consulta);
-        service.create(consulta);
+        service.save(consulta);
     }
 
     //TODO: Mudar implementação, para evitar 2 métodos com a mesma assinatura
@@ -38,6 +38,6 @@ public class ConsultaController {
     public void cancelar(@PathVariable Long id, @RequestBody @Valid ConsultaUpdate consultaUpdate) {
         var consulta = service.findById(id);
         assembler.updateEntity(consultaUpdate, consulta);
-        service.create(consulta);
+        service.save(consulta);
     }
 }

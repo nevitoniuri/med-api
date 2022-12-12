@@ -10,8 +10,8 @@ import med.voll.api.service.ConsultaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static med.voll.api.common.ControllerURIs.CONSULTAS;
-import static med.voll.api.common.ControllerURIs.ID;
+import static med.voll.api.common.Constantes.CONSULTAS;
+import static med.voll.api.common.Constantes.ID;
 import static med.voll.api.common.Utils.handleDataHora;
 
 @RestController

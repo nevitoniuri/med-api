@@ -3,6 +3,7 @@ package med.voll.api.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import med.voll.api.controller.filter.MedicoFilter;
 import med.voll.api.exception.ResourceDuplicatedException;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Especialidade;
@@ -29,8 +30,8 @@ public class MedicoServiceImpl implements MedicoService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
     }
 
-    public Page<Medico> list(Pageable pageable) {
-        return repository.findAllByAtivoTrue(pageable);
+    public Page<Medico> list(MedicoFilter filter, Pageable pageable) {
+        return repository.findAll(MedicoSpec.filter(filter), pageable);
     }
 
     @Transactional

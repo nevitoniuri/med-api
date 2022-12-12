@@ -3,6 +3,7 @@ package med.voll.api.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.controller.assembler.MedicoAssembler;
+import med.voll.api.controller.filter.MedicoFilter;
 import med.voll.api.controller.request.MedicoCreate;
 import med.voll.api.controller.request.MedicoUpdate;
 import med.voll.api.controller.response.MedicoDTO;
@@ -13,7 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static med.voll.api.common.ControllerURIs.*;
+import static med.voll.api.common.Constantes.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +30,8 @@ public class MedicoController {
 
     //TODO: add query params
     @GetMapping
-    public Page<MedicoDTO> list(@PageableDefault(sort = "nome") Pageable pageable) {
-        return assembler.toDTO(service.list(pageable));
+    public Page<MedicoDTO> list(MedicoFilter filter, @PageableDefault(sort = "nome") Pageable pageable) {
+        return assembler.toDTO(service.list(filter, pageable));
     }
 
     @PostMapping

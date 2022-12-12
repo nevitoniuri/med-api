@@ -2,15 +2,18 @@ spring:
   config:
     activate:
       on-profile: test
+  h2:
+    console:
+      enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/vollmed-api-test
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:/test/vollmed-api-test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   devtools:
     add-properties: true
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

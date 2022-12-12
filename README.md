@@ -7,7 +7,7 @@ Uma API REST que simula uma clínica médica, sendo possível agendar e gerencia
 - Spring Boot 3
 - Spring Data JPA
 - Flyway Migration
-- PostgreSQL Database
+- PostgreSQL Database para DEV e H2 Database para TEST
 - Spring DevTools
 - Bean Validation nos endpoints
 - Testes unitários com Junit e Mockito

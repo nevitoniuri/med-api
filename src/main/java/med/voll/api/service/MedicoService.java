@@ -17,7 +17,7 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class MedicoService {
+public class MedicoService implements MedicoServiceInterface {
 
     private final MedicoRepository repository;
     private final ConsultaService consultaService;

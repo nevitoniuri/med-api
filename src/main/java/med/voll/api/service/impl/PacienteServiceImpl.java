@@ -5,13 +5,14 @@ import lombok.RequiredArgsConstructor;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Paciente;
 import med.voll.api.repository.PacienteRepository;
+import med.voll.api.service.PacienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PacienteServiceImpl {
+public class PacienteServiceImpl implements PacienteService {
 
     private final PacienteRepository repository;
 

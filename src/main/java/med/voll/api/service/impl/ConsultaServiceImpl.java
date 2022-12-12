@@ -1,9 +1,12 @@
 package med.voll.api.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.exception.InvalidDataException;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Consulta;
+import med.voll.api.model.MotivoCancelamento;
+import med.voll.api.model.StatusConsulta;
 import med.voll.api.repository.ConsultaRepository;
 import med.voll.api.service.ConsultaService;
 import org.springframework.data.domain.Page;
@@ -39,6 +42,8 @@ public class ConsultaServiceImpl implements ConsultaService {
     //TODO: como refatorar?
     public void checkValid(Consulta consulta) {
 
+        validateDataHora(consulta.getDataHora());
+
         if (!consulta.getPaciente().isAtivo()) {
             throw new InvalidDataException("Paciente inativo");
         }
@@ -47,24 +52,26 @@ public class ConsultaServiceImpl implements ConsultaService {
             throw new InvalidDataException("Médico inativo");
         }
 
-        if (isLessThan30MinutesAntecedence(consulta.getDataHora())) {
+        if (repository.existsByPacienteAndDataHora(consulta.getPaciente(), consulta.getDataHora())) {
+            throw new InvalidDataException("Paciente já possui consulta marcada para o dia");
+        }
+    }
+
+    public void validateDataHora(LocalDateTime dataHora) {
+        if (isLessThan30MinutesAntecedence(dataHora)) {
             throw new InvalidDataException("Consulta deve ser agendada com pelo menos 30 minutos de antecedência");
         }
 
-        if (isMoreThan30DaysAntecedence(consulta.getDataHora())) {
+        if (isMoreThan30DaysAntecedence(dataHora)) {
             throw new InvalidDataException("Consulta deve ser agendada com no máximo 30 dias de antecedência");
         }
 
-        if (isHoraInvalid(consulta.getDataHora())) {
+        if (isHoraInvalid(dataHora)) {
             throw new InvalidDataException("Consulta deve ser agendada entre 7h e 19h");
         }
 
-        if (isDomingo(consulta.getDataHora())) {
+        if (isDomingo(dataHora)) {
             throw new InvalidDataException("Consulta não pode ser agendada para domingo");
-        }
-
-        if (repository.existsByPacienteAndDataHora(consulta.getPaciente(), consulta.getDataHora())) {
-            throw new InvalidDataException("Paciente já possui consulta marcada para o dia");
         }
     }
 
@@ -82,6 +89,20 @@ public class ConsultaServiceImpl implements ConsultaService {
 
     public boolean isDomingo(LocalDateTime dataHora) {
         return dataHora.getDayOfWeek().equals(DayOfWeek.SUNDAY);
+    }
+
+    @Transactional
+    public void reagendar(Consulta consulta, LocalDateTime dataHora) {
+        consulta.setDataHora(dataHora);
+        consulta.setStatus(StatusConsulta.REAGENDADA);
+        save(consulta);
+    }
+
+    @Transactional
+    public void cancelar(Consulta consulta, MotivoCancelamento motivo) {
+        consulta.setMotivoCancelamento(motivo);
+        consulta.setStatus(StatusConsulta.CANCELADA);
+        repository.save(consulta);
     }
 
 }

@@ -10,7 +10,7 @@ Uma API REST que simula uma clínica médica, sendo possível agendar e gerencia
 - PostgreSQL Database para DEV e H2 Database para TEST
 - Spring DevTools
 - Bean Validation nos endpoints
-- Testes unitários com Junit e Mockito
+- Testes de integração com Junit e Mockito
 - Maven
 - Postman
 - Lombok

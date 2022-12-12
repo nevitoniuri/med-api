@@ -3,10 +3,12 @@ package med.voll.api.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import med.voll.api.exception.ResourceDuplicatedException;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
+import med.voll.api.repository.spec.MedicoSpec;
 import med.voll.api.service.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,9 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Transactional
     public void save(Medico medico) {
+        if (alreadyExists(medico)) {
+            throw new ResourceDuplicatedException("Médico já cadastrado");
+        }
         repository.save(medico);
     }
 
@@ -42,7 +47,7 @@ public class MedicoServiceImpl implements MedicoService {
             throw new IllegalArgumentException("Médico já está ativo");
         }
         medico.activate();
-        save(medico);
+        repository.save(medico);
     }
 
     @Transactional
@@ -51,7 +56,11 @@ public class MedicoServiceImpl implements MedicoService {
             throw new IllegalArgumentException("Médico já está inativo");
         }
         medico.deactivate();
-        save(medico);
+        repository.save(medico);
+    }
+
+    public boolean alreadyExists(Medico medico) {
+        return repository.exists(MedicoSpec.exists(medico));
     }
 
     @SneakyThrows

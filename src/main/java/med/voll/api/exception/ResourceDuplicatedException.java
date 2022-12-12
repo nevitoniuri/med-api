@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class RecourceDuplicatedException extends RuntimeException {
+public class ResourceDuplicatedException extends RuntimeException {
 
-    public RecourceDuplicatedException(String message) {
+    public ResourceDuplicatedException(String message) {
         super(message);
     }
 }

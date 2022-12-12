@@ -20,7 +20,6 @@ public record MedicoCreate(
         @Email
         String email,
         @NotBlank
-        @Pattern(regexp = "\\d{11}")
         String telefone,
         @NotNull
         Especialidade especialidade,

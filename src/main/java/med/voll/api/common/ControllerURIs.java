@@ -1,9 +1,9 @@
 package med.voll.api.common;
 
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ControllerURIs {
     public static final String MEDICOS = "/medicos";
     public static final String PACIENTES = "/pacientes";

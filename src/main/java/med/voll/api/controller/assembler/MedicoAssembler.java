@@ -1,5 +1,6 @@
 package med.voll.api.controller.assembler;
 
+import med.voll.api.common.Utils;
 import med.voll.api.model.Medico;
 import med.voll.api.controller.response.MedicoDTO;
 import med.voll.api.controller.request.MedicoCreate;
@@ -14,10 +15,10 @@ public class MedicoAssembler {
 
     public Medico toEntity(MedicoCreate medicoCreate) {
         return Medico.builder()
-                .nome(medicoCreate.nome())
+                .nome(medicoCreate.nome().trim())
                 .crm(medicoCreate.crm())
                 .email(medicoCreate.email())
-                .telefone(medicoCreate.telefone())
+                .telefone(Utils.handleTelefone(medicoCreate.telefone()))
                 .especialidade(medicoCreate.especialidade())
                 .endereco(medicoCreate.endereco())
                 .build();
@@ -26,10 +27,10 @@ public class MedicoAssembler {
     //TODO: como refatorar?
     public void updateEntity(MedicoUpdate medicoUpdate, Medico medico) {
         if (Objects.nonNull(medicoUpdate.nome())) {
-            medico.setNome(medicoUpdate.nome());
+            medico.setNome(medicoUpdate.nome().trim());
         }
         if (Objects.nonNull(medicoUpdate.telefone())) {
-            medico.setTelefone(medicoUpdate.telefone());
+            medico.setTelefone(Utils.handleTelefone(medicoUpdate.telefone()));
         }
         if (Objects.nonNull(medicoUpdate.endereco())) {
             medico.setEndereco(medicoUpdate.endereco());

@@ -96,9 +96,11 @@ class MedicoControllerTest extends AbstractControllerTest {
     @DisplayName("Deve atualizar um medico")
     void deveAtualizarMedico() {
         var id = repository.findAll().stream().filter(m -> m.getNome().equals("Maria Silva")).iterator().next().getId();
+        var nome = "Roberta Silva";
+        var telefone = "85999999999";
         var medicoUpdate = MedicoUpdate.builder()
-                .nome("Maria da Silva")
-                .telefone("85983475185")
+                .nome(nome)
+                .telefone(telefone)
                 .endereco(enderecoMock)
                 .build();
 
@@ -111,7 +113,8 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .andReturn();
 
         var medicoAtualizado = repository.findById(id).stream().iterator().next();
-        assertEquals("Maria da Silva", medicoAtualizado.getNome());
+        assertEquals(nome, medicoAtualizado.getNome());
+        assertEquals(telefone, medicoAtualizado.getTelefone());
         assertEquals(enderecoMock.getLogradouro(), medicoAtualizado.getEndereco().getLogradouro());
     }
 

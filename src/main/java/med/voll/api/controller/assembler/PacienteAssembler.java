@@ -1,5 +1,6 @@
 package med.voll.api.controller.assembler;
 
+import med.voll.api.common.Utils;
 import med.voll.api.model.Paciente;
 import med.voll.api.controller.response.PacienteDTO;
 import med.voll.api.controller.request.PacienteCreate;
@@ -33,7 +34,7 @@ public class PacienteAssembler {
                 .nome(pacienteCreate.nome())
                 .cpf(pacienteCreate.cpf())
                 .email(pacienteCreate.email())
-                .telefone(pacienteCreate.telefone())
+                .telefone(Utils.handleTelefone(pacienteCreate.telefone()))
                 .endereco(pacienteCreate.endereco())
                 .build();
     }
@@ -44,7 +45,7 @@ public class PacienteAssembler {
             paciente.setNome(pacienteUpdate.nome());
         }
         if (Objects.nonNull(pacienteUpdate.telefone())) {
-            paciente.setTelefone(pacienteUpdate.telefone());
+            paciente.setTelefone(Utils.handleTelefone(pacienteUpdate.telefone()));
         }
         if (Objects.nonNull(pacienteUpdate.endereco())) {
             paciente.setEndereco(pacienteUpdate.endereco());

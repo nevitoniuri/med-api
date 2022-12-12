@@ -9,9 +9,12 @@ import med.voll.api.service.ConsultaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import static med.voll.api.common.ControllerURIs.CONSULTAS;
+import static med.voll.api.common.ControllerURIs.ID;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("consultas")
+@RequestMapping(CONSULTAS)
 public class ConsultaController {
 
     private final ConsultaService service;
@@ -23,7 +26,7 @@ public class ConsultaController {
         service.create(assembler.toEntity(consulta));
     }
 
-    @PutMapping("{id}")
+    @PutMapping(ID)
     public void reagendar(@PathVariable Long id, @RequestBody @Valid ConsultaUpdate consultaUpdate) {
         var consulta = service.findById(id);
         assembler.updateEntity(consultaUpdate, consulta);

@@ -74,7 +74,7 @@ class PacienteControllerTest extends AbstractControllerTest {
                 .build();
 
         var request = post(PACIENTES)
-                .content(json(pacienteCreate))
+                .content(toJson(pacienteCreate))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
@@ -102,7 +102,7 @@ class PacienteControllerTest extends AbstractControllerTest {
                 .build();
 
         var request = put(PACIENTES + "/" + id)
-                .content(json(pacienteUpdate))
+                .content(toJson(pacienteUpdate))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)

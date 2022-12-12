@@ -34,7 +34,6 @@ public class ConsultaController {
         service.reagendar(consulta, handleDataHora(dataHora));
     }
 
-    //TODO: Mudar implementação, para evitar 2 métodos com a mesma assinatura
     @PutMapping("{id}/cancelar")
     public void cancelar(@PathVariable Long id, @RequestParam MotivoCancelamento motivo) {
         var consulta = service.findById(id);

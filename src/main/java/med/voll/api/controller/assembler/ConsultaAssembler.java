@@ -21,6 +21,11 @@ public class ConsultaAssembler {
     private final PacienteServiceImpl pacienteService;
 
     public Consulta toEntity(ConsultaCreate consultaCreate) {
+
+        if (isRequestInvalid(consultaCreate)) {
+            throw new IllegalArgumentException("Request inválido");
+        }
+
         var paciente = pacienteService.findById(consultaCreate.pacienteId());
         var consulta = Consulta.builder()
                 .status(StatusConsulta.AGENDADA)
@@ -28,10 +33,6 @@ public class ConsultaAssembler {
                 .dataHora(handleDataHora(consultaCreate.dataHora()))
                 .dataHoraCriacao(LocalDateTime.now())
                 .build();
-
-        if (isRequestInvalid(consultaCreate)) {
-            throw new IllegalArgumentException("Request inválido");
-        }
 
         if (Objects.nonNull(consultaCreate.medicoId())) {
             consulta.setMedico(medicoService.findById(consultaCreate.medicoId()));

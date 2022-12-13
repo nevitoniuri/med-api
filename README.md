@@ -9,7 +9,7 @@ Uma API REST que simula uma clínica médica, sendo possível agendar e gerencia
 - Testes de integração com Junit e Mockito
 - Flyway Migration para versionamento do banco de dados
 - PostgreSQL para DEV (Local) e Banco H2 em Memória para TEST
-- Dockerfile e docker-compose para subir a aplicação pronta com o banco de dados
+- Dockerfile e docker-compose para subir a aplicação pronta para PROD com o banco de dados
 - Consultas das entidades com paginação e filtragem, com Specification e Criteria API
 - Orientação a Interfaces
 - Spring DevTools

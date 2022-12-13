@@ -10,7 +10,6 @@ import med.voll.api.controller.response.MedicoDTO;
 import med.voll.api.service.MedicoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +22,8 @@ public class MedicoController {
     private final MedicoService service;
     private final MedicoAssembler assembler;
 
-    @GetMapping(ID)
-    public MedicoDTO findById(@PathVariable Long id) {
-        return assembler.toDTO(service.findById(id));
-    }
-
     @GetMapping
-    public Page<MedicoDTO> list(MedicoFilter filter, @PageableDefault(sort = "nome") Pageable pageable) {
+    public Page<MedicoDTO> list(MedicoFilter filter, Pageable pageable) {
         return assembler.toDTO(service.list(filter, pageable));
     }
 

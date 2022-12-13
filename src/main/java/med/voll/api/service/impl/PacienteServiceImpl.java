@@ -2,9 +2,12 @@ package med.voll.api.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import med.voll.api.controller.filter.PacienteFilter;
+import med.voll.api.exception.ResourceDuplicatedException;
 import med.voll.api.exception.ResourceNotFoundException;
 import med.voll.api.model.Paciente;
 import med.voll.api.repository.PacienteRepository;
+import med.voll.api.repository.spec.PacienteSpec;
 import med.voll.api.service.PacienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +23,20 @@ public class PacienteServiceImpl implements PacienteService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
     }
 
-    public Page<Paciente> list(Pageable pageable) {
-        return repository.findAllByAtivoTrue(pageable);
+    public Page<Paciente> list(PacienteFilter filter, Pageable pageable) {
+        return repository.findAll(PacienteSpec.filter(filter), pageable);
     }
 
     @Transactional
     public void save(Paciente paciente) {
+        if (alreadyExists(paciente)) {
+            throw new ResourceDuplicatedException("Paciente já cadastrado");
+        }
         repository.save(paciente);
+    }
+
+    public boolean alreadyExists(Paciente paciente) {
+        return repository.exists(PacienteSpec.exists(paciente));
     }
 
     @Transactional

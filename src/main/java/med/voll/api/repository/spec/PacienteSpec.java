@@ -4,9 +4,8 @@ import jakarta.persistence.criteria.Predicate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import med.voll.api.common.Status;
-import med.voll.api.controller.filter.MedicoFilter;
-import med.voll.api.model.Especialidade;
-import med.voll.api.model.Medico;
+import med.voll.api.controller.filter.PacienteFilter;
+import med.voll.api.model.Paciente;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -16,21 +15,21 @@ import java.util.Objects;
 import static med.voll.api.common.Constantes.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class MedicoSpec {
+public class PacienteSpec {
 
-    public static Specification<Medico> exists(Medico medico) {
+    public static Specification<Paciente> exists(Paciente paciente) {
         return ((root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             predicates.add(builder.or(
-                    builder.equal(builder.lower(root.get(NOME)), medico.getNome().toLowerCase()),
-                    builder.equal(root.get(CRM), medico.getCrm()),
-                    builder.equal(builder.lower(root.get(EMAIL)), medico.getEmail().toLowerCase()),
-                    builder.equal(root.get(TELEFONE), medico.getTelefone())
+                    builder.equal(builder.lower(root.get(NOME)), paciente.getNome().toLowerCase()),
+                    builder.equal(root.get(CPF), paciente.getCpf()),
+                    builder.equal(builder.lower(root.get(EMAIL)), paciente.getEmail().toLowerCase()),
+                    builder.equal(root.get(TELEFONE), paciente.getTelefone())
             ));
 
-            if (Objects.nonNull(medico.getId())) {
-                predicates.add(builder.notEqual(root.get(ID_PARAM), medico.getId()));
+            if (Objects.nonNull(paciente.getId())) {
+                predicates.add(builder.notEqual(root.get(ID_PARAM), paciente.getId()));
             }
 
             return builder.and(predicates.toArray(new Predicate[0]));
@@ -38,7 +37,7 @@ public final class MedicoSpec {
     }
 
     //TODO: Como Refatorar?
-    public static Specification<Medico> filter(MedicoFilter filter) {
+    public static Specification<Paciente> filter(PacienteFilter filter) {
         return ((root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -48,20 +47,14 @@ public final class MedicoSpec {
             if (Objects.nonNull(filter.nome())) {
                 predicates.add(builder.like(builder.lower(root.get(NOME)), "%" + filter.nome().toLowerCase() + "%"));
             }
-            if (Objects.nonNull(filter.crm())) {
-                predicates.add(builder.equal(root.get(CRM), filter.crm()));
+            if (Objects.nonNull(filter.cpf())) {
+                predicates.add(builder.equal(root.get(CPF), filter.cpf()));
             }
             if (Objects.nonNull(filter.email())) {
                 predicates.add(builder.like(builder.lower(root.get(EMAIL)), "%" + filter.email().toLowerCase() + "%"));
             }
             if (Objects.nonNull(filter.telefone())) {
                 predicates.add(builder.equal(root.get(TELEFONE), filter.telefone()));
-            }
-            if (Objects.nonNull(filter.especialidade())) {
-                var listaEspecialidade = filter.especialidade().stream()
-                        .map(Especialidade::of)
-                        .toList();
-                predicates.add(root.get(ESPECIALIDADE).in(listaEspecialidade));
             }
 
             if (Objects.isNull(filter.status()) || filter.status().isEmpty()) {

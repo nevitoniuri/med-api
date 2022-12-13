@@ -32,13 +32,15 @@ class PacienteControllerTest extends AbstractControllerTest {
         String cpf = "82303783399";
         var id = repository.findAll().stream().filter(p -> p.getCpf().equals(cpf)).iterator().next().getId();
 
-        var request = get(PACIENTES + "/" + id).accept(MediaType.APPLICATION_JSON);
+        var request = get(PACIENTES)
+                .param(ID_PARAM, String.valueOf(id))
+                .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andDo(payloadExtractor)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var paciente = payloadExtractor.as(PacienteDTO.class);
+        var paciente = payloadExtractor.asListOf(PacienteDTO.class, true).iterator().next();
         assertEquals(id, paciente.id());
         assertEquals(cpf, paciente.cpf());
     }

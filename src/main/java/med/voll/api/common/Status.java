@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import med.voll.api.exception.ResourceNotFoundException;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Getter
@@ -21,7 +22,16 @@ public enum Status {
                 .orElseThrow(() -> new ResourceNotFoundException("Status não encontrado"));
     }
 
-    public static boolean toBoolean(Integer value) {
+    public static List<Boolean> getListaStatus(List<Integer> listaStatus) {
+        return listaStatus.stream()
+                .map(Status::of)
+                .map(Status::getId)
+                .map(Status::toBoolean)
+                .toList();
+    }
+
+    private static boolean toBoolean(Integer value) {
         return value == 1;
     }
+
 }

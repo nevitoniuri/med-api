@@ -2,13 +2,13 @@ package med.voll.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import med.voll.api.controller.assembler.PacienteAssembler;
+import med.voll.api.controller.filter.PacienteFilter;
 import med.voll.api.controller.request.PacienteCreate;
 import med.voll.api.controller.request.PacienteUpdate;
 import med.voll.api.controller.response.PacienteDTO;
 import med.voll.api.service.PacienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +22,9 @@ public class PacienteController {
     private final PacienteService service;
     private final PacienteAssembler assembler;
 
-    @GetMapping(ID)
-    public PacienteDTO findById(@PathVariable Long id) {
-        return assembler.toDTO(service.findById(id));
-    }
-
-    //TODO: add query params
     @GetMapping
-    public Page<PacienteDTO> list(@PageableDefault(sort = "nome") Pageable pageable) {
-        return assembler.toDTO(service.list(pageable));
+    public Page<PacienteDTO> list(PacienteFilter filter, Pageable pageable) {
+        return assembler.toDTO(service.list(filter, pageable));
     }
 
     @PostMapping

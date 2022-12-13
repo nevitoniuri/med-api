@@ -33,13 +33,15 @@ class MedicoControllerTest extends AbstractControllerTest {
         var crm = "152390";
         var id = repository.findAll().stream().filter(m -> m.getCrm().equals(crm)).iterator().next().getId();
 
-        var request = get(MEDICOS + "/" + id).accept(MediaType.APPLICATION_JSON);
+        var request = get(MEDICOS)
+                .param(ID_PARAM, id.toString())
+                .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andDo(payloadExtractor)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var medico = payloadExtractor.as(MedicoDTO.class);
+        var medico = payloadExtractor.asListOf(MedicoDTO.class, true).iterator().next();
         assertEquals(crm, medico.crm());
     }
 

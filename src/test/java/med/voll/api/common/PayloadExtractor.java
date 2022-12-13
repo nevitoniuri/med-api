@@ -35,7 +35,6 @@ public class PayloadExtractor implements ResultHandler {
 
     public <T> List<T> asListOf(Class<T> payloadClass, boolean isPaged) throws UnsupportedEncodingException {
         Object data = extractDataPayloadFromHttpBody(isPaged);
-
         CollectionType listType = jsonMapper.getTypeFactory().constructCollectionType(List.class, payloadClass);
         return jsonMapper.convertValue(data, listType);
     }

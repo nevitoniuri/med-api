@@ -1,17 +1,24 @@
 package med.voll.api.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import med.voll.api.exception.ResourceNotFoundException;
+
+import java.util.stream.Stream;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Especialidade {
-    ORTOPEDIA(1L, "Ortopedia"),
-    CARDIOLOGIA(2L, "Cardiologia"),
-    GINECOLOGIA(3L, "Ginecologia"),
-    DERMATOLOGIA(4L, "Dermatologia");
+    ORTOPEDIA(1), CARDIOLOGIA(2), GINECOLOGIA(3), DERMATOLOGIA(4);
 
-    private final Long id;
-    private final String descricao;
+    private final Integer id;
+
+    public static Especialidade of(Integer id) {
+        return Stream.of(Especialidade.values())
+                .filter(especialidade -> especialidade.id.equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Especialidade não encontrada"));
+    }
 
 }

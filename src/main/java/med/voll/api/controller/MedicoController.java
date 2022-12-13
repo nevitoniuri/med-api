@@ -28,7 +28,6 @@ public class MedicoController {
         return assembler.toDTO(service.findById(id));
     }
 
-    //TODO: add query params
     @GetMapping
     public Page<MedicoDTO> list(MedicoFilter filter, @PageableDefault(sort = "nome") Pageable pageable) {
         return assembler.toDTO(service.list(filter, pageable));

@@ -3,7 +3,9 @@ package med.voll.api.repository.spec;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import med.voll.api.common.Status;
 import med.voll.api.controller.filter.MedicoFilter;
+import med.voll.api.model.Especialidade;
 import med.voll.api.model.Medico;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -52,13 +54,21 @@ public final class MedicoSpec {
                 predicates.add(builder.equal(root.get(TELEFONE), filter.telefone()));
             }
             if (Objects.nonNull(filter.especialidade())) {
-                predicates.add(builder.equal(root.get(ESPECIALIDADE), filter.especialidade()));
+                var listaEspecialidade = filter.especialidade().stream()
+                        .map(Especialidade::of)
+                        .toList();
+                predicates.add(root.get(ESPECIALIDADE).in(listaEspecialidade));
             }
 
-            if (Objects.nonNull(filter.ativo())) {
-                predicates.add(builder.equal(root.get(ATIVO), filter.ativo()));
-            } else {
+            if (Objects.isNull(filter.status()) || filter.status().isEmpty()) {
                 predicates.add(builder.equal(root.get(ATIVO), true));
+            } else {
+                var listaStatus = filter.status().stream()
+                        .map(Status::of)
+                        .map(Status::getId)
+                        .map(Status::toBoolean)
+                        .toList();
+                predicates.add(root.get(ATIVO).in(listaStatus));
             }
 
             query.orderBy(builder.asc(root.get(NOME)));

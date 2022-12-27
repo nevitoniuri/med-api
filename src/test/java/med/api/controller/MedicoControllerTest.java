@@ -5,7 +5,7 @@ import med.api.common.Constantes;
 import med.api.controller.request.MedicoCreate;
 import med.api.controller.request.MedicoUpdate;
 import med.api.controller.response.MedicoDTO;
-import med.api.model.Especialidade;
+import med.api.domain.enums.Especialidade;
 import med.api.repository.MedicoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

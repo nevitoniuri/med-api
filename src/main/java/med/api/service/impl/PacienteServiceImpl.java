@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import med.api.controller.filter.PacienteFilter;
 import med.api.exception.ResourceDuplicatedException;
 import med.api.exception.ResourceNotFoundException;
-import med.api.model.Paciente;
+import med.api.domain.model.Paciente;
 import med.api.repository.PacienteRepository;
 import med.api.repository.spec.PacienteSpec;
 import med.api.service.PacienteService;

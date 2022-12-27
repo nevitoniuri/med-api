@@ -2,8 +2,8 @@ package med.api.service.assembler;
 
 import lombok.RequiredArgsConstructor;
 import med.api.controller.request.ConsultaCreate;
-import med.api.model.Consulta;
-import med.api.model.StatusConsulta;
+import med.api.domain.model.Consulta;
+import med.api.domain.enums.StatusConsulta;
 import med.api.service.PacienteService;
 import med.api.service.impl.MedicoServiceImpl;
 import org.springframework.stereotype.Component;

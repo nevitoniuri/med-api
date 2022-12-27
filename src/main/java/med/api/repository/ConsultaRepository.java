@@ -1,7 +1,7 @@
 package med.api.repository;
 
-import med.api.model.Consulta;
-import med.api.model.Paciente;
+import med.api.domain.model.Consulta;
+import med.api.domain.model.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

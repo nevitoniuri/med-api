@@ -1,7 +1,7 @@
 package med.api.service;
 
-import med.api.model.Consulta;
-import med.api.model.MotivoCancelamento;
+import med.api.domain.model.Consulta;
+import med.api.domain.enums.MotivoCancelamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

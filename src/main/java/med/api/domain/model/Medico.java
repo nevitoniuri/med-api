@@ -1,7 +1,8 @@
-package med.api.model;
+package med.api.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.api.domain.enums.Especialidade;
 
 @Getter
 @Setter

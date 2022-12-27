@@ -1,6 +1,6 @@
 package med.api.repository;
 
-import med.api.model.Paciente;
+import med.api.domain.model.Paciente;
 import org.springframework.stereotype.Repository;
 
 @Repository

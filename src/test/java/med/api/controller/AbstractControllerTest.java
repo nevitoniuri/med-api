@@ -2,7 +2,7 @@ package med.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import med.api.common.PayloadExtractor;
-import med.api.model.Endereco;
+import med.api.domain.model.Endereco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;

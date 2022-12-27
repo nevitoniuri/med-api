@@ -1,4 +1,4 @@
-package med.api.model;
+package med.api.domain.model;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;

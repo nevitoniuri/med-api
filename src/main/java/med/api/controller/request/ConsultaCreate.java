@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import med.api.model.Especialidade;
+import med.api.domain.enums.Especialidade;
 
 @Builder
 public record ConsultaCreate(

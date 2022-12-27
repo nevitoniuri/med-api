@@ -1,7 +1,7 @@
 package med.api.service.assembler;
 
 import med.api.common.Utils;
-import med.api.model.Paciente;
+import med.api.domain.model.Paciente;
 import med.api.controller.response.PacienteDTO;
 import med.api.controller.request.PacienteCreate;
 import med.api.controller.request.PacienteUpdate;

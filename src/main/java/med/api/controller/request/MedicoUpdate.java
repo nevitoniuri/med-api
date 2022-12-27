@@ -2,7 +2,7 @@ package med.api.controller.request;
 
 import jakarta.validation.Valid;
 import lombok.Builder;
-import med.api.model.Endereco;
+import med.api.domain.model.Endereco;
 
 @Builder
 public record MedicoUpdate(

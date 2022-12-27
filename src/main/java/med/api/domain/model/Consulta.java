@@ -1,7 +1,9 @@
-package med.api.model;
+package med.api.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.api.domain.enums.MotivoCancelamento;
+import med.api.domain.enums.StatusConsulta;
 
 import java.time.LocalDateTime;
 

@@ -8,7 +8,7 @@ import med.api.common.Utils;
 import med.api.controller.request.ConsultaCreate;
 import med.api.service.ConsultaService;
 import med.api.service.assembler.ConsultaAssembler;
-import med.api.model.MotivoCancelamento;
+import med.api.domain.enums.MotivoCancelamento;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

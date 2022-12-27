@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
-import med.api.model.Endereco;
-import med.api.model.Especialidade;
+import med.api.domain.model.Endereco;
+import med.api.domain.enums.Especialidade;
 
 @Builder
 public record MedicoCreate(

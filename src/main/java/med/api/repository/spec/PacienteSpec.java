@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import med.api.common.Status;
 import med.api.controller.filter.PacienteFilter;
-import med.api.model.Paciente;
+import med.api.domain.model.Paciente;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;

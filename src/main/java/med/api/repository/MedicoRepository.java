@@ -1,7 +1,7 @@
 package med.api.repository;
 
-import med.api.model.Especialidade;
-import med.api.model.Medico;
+import med.api.domain.enums.Especialidade;
+import med.api.domain.model.Medico;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

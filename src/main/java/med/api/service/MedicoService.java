@@ -1,7 +1,7 @@
 package med.api.service;
 
 import med.api.controller.filter.MedicoFilter;
-import med.api.model.Medico;
+import med.api.domain.model.Medico;
 
 public interface MedicoService extends CrudService<Medico, MedicoFilter> {
 

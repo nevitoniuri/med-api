@@ -1,4 +1,4 @@
-package med.api.model;
+package med.api.domain.enums;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package med.api.service.assembler;
 
 import med.api.controller.response.MedicoDTO;
 import med.api.common.Utils;
-import med.api.model.Medico;
+import med.api.domain.model.Medico;
 import med.api.controller.request.MedicoCreate;
 import med.api.controller.request.MedicoUpdate;
 import org.springframework.data.domain.Page;

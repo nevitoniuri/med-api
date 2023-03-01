@@ -2,9 +2,9 @@ package med.api.controller;
 
 import lombok.SneakyThrows;
 import med.api.common.Constantes;
-import med.api.controller.request.MedicoCreate;
-import med.api.controller.request.MedicoUpdate;
-import med.api.controller.response.MedicoDTO;
+import med.api.domain.request.MedicoCreate;
+import med.api.domain.request.MedicoUpdate;
+import med.api.domain.response.MedicoDTO;
 import med.api.domain.enums.Especialidade;
 import med.api.repository.MedicoRepository;
 import org.junit.jupiter.api.Assertions;

@@ -1,7 +1,7 @@
 package med.api.service.mapper;
 
 import lombok.RequiredArgsConstructor;
-import med.api.controller.request.ConsultaCreate;
+import med.api.domain.request.ConsultaCreate;
 import med.api.domain.model.Consulta;
 import med.api.domain.enums.StatusConsulta;
 import med.api.service.PacienteService;

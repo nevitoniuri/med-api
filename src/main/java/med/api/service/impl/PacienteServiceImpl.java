@@ -2,7 +2,7 @@ package med.api.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import med.api.controller.filter.PacienteFilter;
+import med.api.domain.filter.PacienteFilter;
 import med.api.exception.ResourceDuplicatedException;
 import med.api.exception.ResourceNotFoundException;
 import med.api.domain.model.Paciente;

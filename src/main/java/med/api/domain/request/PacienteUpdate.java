@@ -1,4 +1,4 @@
-package med.api.controller.request;
+package med.api.domain.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;

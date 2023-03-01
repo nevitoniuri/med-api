@@ -1,6 +1,7 @@
-package med.api.controller.request;
+package med.api.domain.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -12,6 +13,7 @@ public record ConsultaCreate(
         Especialidade especialidade,
         @NotNull
         Long pacienteId,
+        @Future
         @NotBlank
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         String dataHora) {

@@ -2,9 +2,9 @@ package med.api.controller;
 
 import lombok.SneakyThrows;
 import med.api.common.Constantes;
-import med.api.controller.request.PacienteCreate;
-import med.api.controller.request.PacienteUpdate;
-import med.api.controller.response.PacienteDTO;
+import med.api.domain.request.PacienteCreate;
+import med.api.domain.request.PacienteUpdate;
+import med.api.domain.response.PacienteDTO;
 import med.api.repository.PacienteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;

@@ -1,9 +1,9 @@
 package med.api.service.mapper;
 
 import med.api.common.Utils;
-import med.api.controller.request.PacienteCreate;
-import med.api.controller.request.PacienteUpdate;
-import med.api.controller.response.PacienteDTO;
+import med.api.domain.request.PacienteCreate;
+import med.api.domain.request.PacienteUpdate;
+import med.api.domain.response.PacienteDTO;
 import med.api.domain.model.Paciente;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package med.api.controller;
 
-import med.api.controller.request.ConsultaCreate;
+import med.api.domain.request.ConsultaCreate;
 import med.api.service.ConsultaService;
 import med.api.service.MedicoService;
 import org.junit.jupiter.api.Order;

@@ -1,4 +1,4 @@
-package med.api.controller.response;
+package med.api.domain.response;
 
 import lombok.Builder;
 import med.api.domain.model.Endereco;

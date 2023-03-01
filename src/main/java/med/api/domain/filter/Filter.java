@@ -1,4 +1,4 @@
-package med.api.controller.filter;
+package med.api.domain.filter;
 
 public class Filter<E, F> {
 

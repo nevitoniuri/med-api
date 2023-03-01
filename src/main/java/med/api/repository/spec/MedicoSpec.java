@@ -4,7 +4,7 @@ import jakarta.persistence.criteria.Predicate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import med.api.common.Status;
-import med.api.controller.filter.MedicoFilter;
+import med.api.domain.filter.MedicoFilter;
 import med.api.domain.enums.Especialidade;
 import med.api.domain.model.Medico;
 import org.springframework.data.jpa.domain.Specification;

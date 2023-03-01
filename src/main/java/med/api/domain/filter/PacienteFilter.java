@@ -1,4 +1,4 @@
-package med.api.controller.filter;
+package med.api.domain.filter;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package med.api.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import med.api.controller.filter.MedicoFilter;
+import med.api.domain.filter.MedicoFilter;
 import med.api.exception.ResourceDuplicatedException;
 import med.api.exception.ResourceNotFoundException;
 import med.api.repository.MedicoRepository;

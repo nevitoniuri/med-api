@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import med.api.common.Constantes;
 import med.api.common.Utils;
-import med.api.controller.request.ConsultaCreate;
+import med.api.domain.request.ConsultaCreate;
 import med.api.service.ConsultaService;
 import med.api.service.mapper.ConsultaMapper;
 import med.api.domain.enums.MotivoCancelamento;

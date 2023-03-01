@@ -2,7 +2,6 @@ package med.api.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.api.domain.model.Endereco;
 
 @Getter
 @Setter

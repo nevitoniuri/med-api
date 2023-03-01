@@ -1,10 +1,10 @@
 package med.api.service.mapper;
 
-import med.api.controller.response.MedicoDTO;
+import med.api.domain.response.MedicoDTO;
 import med.api.common.Utils;
 import med.api.domain.model.Medico;
-import med.api.controller.request.MedicoCreate;
-import med.api.controller.request.MedicoUpdate;
+import med.api.domain.request.MedicoCreate;
+import med.api.domain.request.MedicoUpdate;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;

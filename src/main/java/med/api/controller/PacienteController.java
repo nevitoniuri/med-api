@@ -2,10 +2,10 @@ package med.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import med.api.common.Constantes;
-import med.api.controller.filter.PacienteFilter;
-import med.api.controller.request.PacienteCreate;
-import med.api.controller.request.PacienteUpdate;
-import med.api.controller.response.PacienteDTO;
+import med.api.domain.filter.PacienteFilter;
+import med.api.domain.request.PacienteCreate;
+import med.api.domain.request.PacienteUpdate;
+import med.api.domain.response.PacienteDTO;
 import med.api.service.PacienteService;
 import med.api.service.mapper.PacienteMapper;
 import org.springframework.data.domain.Page;

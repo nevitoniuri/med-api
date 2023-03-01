@@ -7,7 +7,7 @@ import med.api.common.Constantes;
 import med.api.common.Utils;
 import med.api.controller.request.ConsultaCreate;
 import med.api.service.ConsultaService;
-import med.api.service.assembler.ConsultaAssembler;
+import med.api.service.mapper.ConsultaMapper;
 import med.api.domain.enums.MotivoCancelamento;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 public class ConsultaController {
 
     private final ConsultaService service;
-    private final ConsultaAssembler assembler;
+    private final ConsultaMapper mapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody @Valid ConsultaCreate consulta) {
-        service.save(assembler.toEntity(consulta));
+        service.save(mapper.toEntity(consulta));
     }
 
     @PutMapping(Constantes.ID)

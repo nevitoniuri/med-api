@@ -1,4 +1,4 @@
-package med.api.service.assembler;
+package med.api.service.mapper;
 
 import lombok.RequiredArgsConstructor;
 import med.api.controller.request.ConsultaCreate;
@@ -15,7 +15,7 @@ import static med.api.common.Utils.handleDataHora;
 
 @Component
 @RequiredArgsConstructor
-public class ConsultaAssembler {
+public class ConsultaMapper {
 
     private final MedicoServiceImpl medicoService;
     private final PacienteService pacienteService;

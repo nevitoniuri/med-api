@@ -1,17 +1,16 @@
-package med.api.service.assembler;
+package med.api.service.mapper;
 
 import med.api.controller.response.MedicoDTO;
 import med.api.common.Utils;
 import med.api.domain.model.Medico;
 import med.api.controller.request.MedicoCreate;
 import med.api.controller.request.MedicoUpdate;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
-public class MedicoAssembler {
+public class MedicoMapper {
 
     public Medico toEntity(MedicoCreate medicoCreate) {
         return Medico.builder()
@@ -35,10 +34,6 @@ public class MedicoAssembler {
         if (Objects.nonNull(medicoUpdate.endereco())) {
             medico.setEndereco(medicoUpdate.endereco());
         }
-    }
-
-    public Page<MedicoDTO> toDTO(Page<Medico> medicos) {
-        return medicos.map(this::toDTO);
     }
 
     public MedicoDTO toDTO(Medico medico) {

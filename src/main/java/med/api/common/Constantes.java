@@ -15,7 +15,6 @@ public final class Constantes {
     public static final String EMAIL = "email";
     public static final String TELEFONE = "telefone";
     public static final String ESPECIALIDADE = "especialidade";
-    public static final String ENDERECO = "endereco";
 
     //CONTROLLERS
     public static final String MEDICOS = "/medicos";
@@ -26,4 +25,10 @@ public final class Constantes {
     public static final String DEACTIVATE = "/deactivate";
     public static final String ID_ACTIVATE = ID + ACTIVATE;
     public static final String ID_DEACTIVATE = ID + DEACTIVATE;
+    public static final String ID_CANCEL = ID + "/cancel";
+
+    //SERVICES
+    public static final int INICIO_DIA = 7;
+    public static final int FIM_DIA = 18;
+
 }

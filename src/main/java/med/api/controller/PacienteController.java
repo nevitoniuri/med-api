@@ -1,7 +1,6 @@
 package med.api.controller;
 
 import lombok.RequiredArgsConstructor;
-import med.api.common.Constantes;
 import med.api.domain.filter.PacienteFilter;
 import med.api.domain.request.PacienteCreate;
 import med.api.domain.request.PacienteUpdate;
@@ -13,9 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import static med.api.common.Constantes.*;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(Constantes.PACIENTES)
+@RequestMapping(PACIENTES)
 public class PacienteController {
 
     private final PacienteService service;
@@ -28,11 +29,12 @@ public class PacienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    //TODO: Implementar CreatedResource, para retornar o Location do recurso criado
     public void create(@RequestBody PacienteCreate paciente) {
         service.save(mapper.toEntity(paciente));
     }
 
-    @PutMapping(Constantes.ID)
+    @PutMapping(ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Long id, @RequestBody PacienteUpdate pacienteUpdate) {
         var paciente = service.findById(id);
@@ -40,13 +42,13 @@ public class PacienteController {
         service.save(paciente);
     }
 
-    @PutMapping(Constantes.ID_ACTIVATE)
+    @PutMapping(ID_ACTIVATE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void activate(@PathVariable Long id) {
         service.activate(service.findById(id));
     }
 
-    @PutMapping(Constantes.ID_DEACTIVATE)
+    @PutMapping(ID_DEACTIVATE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable Long id) {
         service.deactivate(service.findById(id));

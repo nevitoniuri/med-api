@@ -3,14 +3,14 @@ package med.api.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import med.api.domain.enums.Especialidade;
 import med.api.domain.filter.MedicoFilter;
+import med.api.domain.model.Medico;
 import med.api.exception.ResourceDuplicatedException;
 import med.api.exception.ResourceNotFoundException;
 import med.api.repository.MedicoRepository;
 import med.api.repository.spec.MedicoSpec;
 import med.api.service.MedicoService;
-import med.api.domain.enums.Especialidade;
-import med.api.domain.model.Medico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,6 @@ import java.util.Collections;
 public class MedicoServiceImpl implements MedicoService {
 
     private final MedicoRepository repository;
-    private final ConsultaServiceImpl consultaService;
 
     public Medico findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
@@ -40,6 +39,10 @@ public class MedicoServiceImpl implements MedicoService {
             throw new ResourceDuplicatedException("Médico já cadastrado");
         }
         repository.save(medico);
+    }
+
+    private boolean alreadyExists(Medico medico) {
+        return repository.exists(MedicoSpec.exists(medico));
     }
 
     @Transactional
@@ -60,10 +63,6 @@ public class MedicoServiceImpl implements MedicoService {
         repository.save(medico);
     }
 
-    public boolean alreadyExists(Medico medico) {
-        return repository.exists(MedicoSpec.exists(medico));
-    }
-
     @SneakyThrows
     public Medico findAvailableByEspecialidadeAndDataHora(Especialidade especialidade, LocalDateTime dataHora) {
         var medicos = repository.findAllByAtivoTrueAndEspecialidade(especialidade);
@@ -72,14 +71,14 @@ public class MedicoServiceImpl implements MedicoService {
                 .filter(medico -> isAvailableInDataHora(medico, dataHora))
                 .toList();
         if (medicosDisponiveis.isEmpty()) {
-            throw new ResourceNotFoundException("Médico não encontrado");
+            throw new ResourceNotFoundException("Nenhum médico disponível para esta especialidade neste horário");
         }
         var rand = SecureRandom.getInstanceStrong();
         return medicosDisponiveis.get(rand.nextInt(medicosDisponiveis.size()));
     }
 
-    public boolean isAvailableInDataHora(Medico medico, LocalDateTime dataHora) {
-        return !consultaService.existeConsultaComMedicoNoHorario(medico.getId(), dataHora);
+    private boolean isAvailableInDataHora(Medico medico, LocalDateTime dataHora) {
+        return repository.isAvailableInDataHora(medico.getId(), dataHora);
     }
 
 }

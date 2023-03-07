@@ -2,7 +2,6 @@ package med.api.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import med.api.common.Constantes;
 import med.api.domain.filter.MedicoFilter;
 import med.api.domain.request.MedicoCreate;
 import med.api.domain.request.MedicoUpdate;
@@ -14,9 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import static med.api.common.Constantes.*;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(Constantes.MEDICOS)
+@RequestMapping(MEDICOS)
 public class MedicoController {
     private final MedicoService service;
     private final MedicoMapper mapper;
@@ -28,11 +29,12 @@ public class MedicoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    //TODO: Implementar CreatedResource, para retornar o Location do recurso criado
     public void create(@RequestBody @Valid MedicoCreate medico) {
         service.save(mapper.toEntity(medico));
     }
 
-    @PutMapping(Constantes.ID)
+    @PutMapping(ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Long id, @RequestBody @Valid MedicoUpdate medicoUpdate) {
         var medico = service.findById(id);
@@ -40,13 +42,13 @@ public class MedicoController {
         service.save(medico);
     }
 
-    @PutMapping(Constantes.ID_ACTIVATE)
+    @PutMapping(ID_ACTIVATE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void activate(@PathVariable Long id) {
         service.activate(service.findById(id));
     }
 
-    @PutMapping(Constantes.ID_DEACTIVATE)
+    @PutMapping(ID_DEACTIVATE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable Long id) {
         service.deactivate(service.findById(id));

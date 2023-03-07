@@ -1,6 +1,6 @@
 CREATE TABLE consultas
 (
-    id                  BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    id                  BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     status              VARCHAR(32)                         NOT NULL,
     medico_id           BIGINT                              NOT NULL,
     paciente_id         BIGINT                              NOT NULL,
@@ -8,7 +8,6 @@ CREATE TABLE consultas
     data_hora_criacao   TIMESTAMP                           NOT NULL,
     motivo_cancelamento VARCHAR(128),
 
-    CONSTRAINT consultas_pkey PRIMARY KEY (id),
     CONSTRAINT consultas_medicos_fkey FOREIGN KEY (medico_id) REFERENCES medicos (id),
     CONSTRAINT consultas_pacientes_fkey FOREIGN KEY (paciente_id) REFERENCES pacientes (id)
 );

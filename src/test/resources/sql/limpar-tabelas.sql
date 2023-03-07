@@ -1,3 +1,3 @@
-delete from consultas;
-delete from medicos;
-delete from pacientes;
+DELETE FROM consultas;
+DELETE FROM medicos;
+DELETE FROM pacientes;

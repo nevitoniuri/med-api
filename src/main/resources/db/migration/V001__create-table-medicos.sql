@@ -1,28 +1,23 @@
-create table medicos
+CREATE TABLE medicos
 (
-    id            bigint       not null,
-    ativo         boolean      not null default true,
-    nome          varchar(100) not null,
-    crm           varchar(6)   not null,
-    email         varchar(100) not null,
-    telefone      varchar(11)  not null,
-    especialidade varchar(100) not null,
-    logradouro    varchar(100) not null,
-    numero        varchar(20)  not null,
-    complemento   varchar(100),
-    bairro        varchar(100) not null,
-    cidade        varchar(100) not null,
-    uf            varchar(2)   not null,
-    cep           varchar(8)   not null,
+    id            BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    ativo         BOOLEAN DEFAULT TRUE                NOT NULL,
+    nome          VARCHAR(128)                        NOT NULL,
+    crm           VARCHAR(6)                          NOT NULL,
+    email         VARCHAR(128)                        NOT NULL,
+    telefone      VARCHAR(11)                         NOT NULL,
+    especialidade VARCHAR(128)                        NOT NULL,
+    logradouro    VARCHAR(128)                        NOT NULL,
+    numero        VARCHAR(20)                         NOT NULL,
+    complemento   VARCHAR(128),
+    bairro        VARCHAR(128)                        NOT NULL,
+    cidade        VARCHAR(128)                        NOT NULL,
+    uf            VARCHAR(2)                          NOT NULL,
+    cep           VARCHAR(8)                          NOT NULL,
 
-    constraint medicos_pk primary key (id),
-    constraint medicos_unique_nome unique (nome),
-    constraint medicos_unique_crm unique (crm),
-    constraint medicos_unique_email unique (email),
-    constraint medicos_unique_telefone unique (telefone)
+    CONSTRAINT medicos_pkey PRIMARY KEY (id),
+    CONSTRAINT medicos_nome_key UNIQUE (nome),
+    CONSTRAINT medicos_crm_key UNIQUE (crm),
+    CONSTRAINT medicos_email_key UNIQUE (email),
+    CONSTRAINT medicos_telefone_key UNIQUE (telefone)
 );
-
-create sequence if not exists medicos_id_seq;
-
-alter table medicos
-    alter column id set default nextval('medicos_id_seq');

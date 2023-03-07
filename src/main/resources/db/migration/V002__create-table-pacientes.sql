@@ -1,27 +1,22 @@
-create table pacientes
+CREATE TABLE pacientes
 (
-    id          bigint       not null,
-    ativo       boolean      not null default true,
-    nome        varchar(100) not null,
-    cpf         varchar(11)  not null,
-    email       varchar(100) not null,
-    telefone    varchar(11)  not null,
-    logradouro  varchar(100) not null,
-    numero      varchar(20)  not null,
-    complemento varchar(100),
-    bairro      varchar(100) not null,
-    cidade      varchar(100) not null,
-    uf          varchar(2)   not null,
-    cep         varchar(8)   not null,
+    id          BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    ativo       BOOLEAN DEFAULT TRUE                NOT NULL,
+    nome        VARCHAR(128)                        NOT NULL,
+    cpf         VARCHAR(11)                         NOT NULL,
+    email       VARCHAR(128)                        NOT NULL,
+    telefone    VARCHAR(11)                         NOT NULL,
+    logradouro  VARCHAR(128)                        NOT NULL,
+    numero      VARCHAR(20)                         NOT NULL,
+    complemento VARCHAR(128),
+    bairro      VARCHAR(128)                        NOT NULL,
+    cidade      VARCHAR(128)                        NOT NULL,
+    uf          VARCHAR(2)                          NOT NULL,
+    cep         VARCHAR(8)                          NOT NULL,
 
-    constraint pacientes_pk primary key (id),
-    constraint pacientes_unique_nome unique (nome),
-    constraint pacientes_unique_cpf unique (cpf),
-    constraint pacientes_unique_email unique (email),
-    constraint pacientes_unique_telefone unique (telefone)
+    CONSTRAINT pacientes_pkey PRIMARY KEY (id),
+    CONSTRAINT pacientes_nome_key UNIQUE (nome),
+    CONSTRAINT pacientes_cpf_key UNIQUE (cpf),
+    CONSTRAINT pacientes_email_key UNIQUE (email),
+    CONSTRAINT pacientes_telefone_key UNIQUE (telefone)
 );
-
-create sequence if not exists pacientes_id_seq;
-
-alter table pacientes
-    alter column id set default nextval('pacientes_id_seq');

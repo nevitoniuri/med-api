@@ -17,12 +17,12 @@ Uma API REST que simula uma clínica médica, sendo possível agendar e gerencia
 - Maven
 - Postman
 - Lombok
-- Swagger para documentação da API (http://localhost:8080/swagger-ui.html)
+- SpringDoc OpenAPI para documentação da API (http://localhost:8080/swagger-ui.html, http://localhost:8080/v3/api-docs)
 
 ## Funcionalidades
-- Pacientes (Cadastros, updates, listagem)
-- Médicos (Cadastros, updates, listagem)
-- Consultas (Agendamento, Reagendamento, Cancelamento, Motivo)
+- Pacientes (Cadastro, update, listagem)
+- Médicos (Cadastro, update, listagem)
+- Consultas (Agendamento, Reagendamento, Cancelamento)
 
 ## Regras de Negócio
 - O horário de funcionamento da clínica é de segunda a sábado, das 07:00 às 19:00;

@@ -13,7 +13,7 @@ public interface ConsultaService {
 
     Page<Consulta> list(Pageable pageable);
 
-    void save(Consulta consulta);
+    void agendar(Consulta consulta);
 
     void reagendar(Consulta consulta, LocalDateTime dataHora);
 

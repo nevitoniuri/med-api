@@ -20,19 +20,19 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<DadosErroValidacao>> handle400(MethodArgumentNotValidException e) {
+    public ResponseEntity<List<DadosErroValidacao>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<FieldError> fieldErrors = e.getFieldErrors();
         return ResponseEntity.badRequest().body(fieldErrors.stream().map(DadosErroValidacao::new).toList());
     }
 
     @ExceptionHandler(ResourceDuplicatedException.class)
-    public ResponseEntity<Throwable> handle409(ResourceDuplicatedException e) {
-        return ResponseEntity.status(409).build();
+    public ResponseEntity<ResourceDuplicatedException> handleResourceDuplicatedException(ResourceDuplicatedException e) {
+        return ResponseEntity.badRequest().body(e);
     }
 
     @ExceptionHandler(InvalidDataException.class)
-    public ResponseEntity<Throwable> handleInvalidDataException(InvalidDataException e) {
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<InvalidDataException> handleInvalidDataException(InvalidDataException e) {
+        return ResponseEntity.badRequest().body(e);
     }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static med.api.common.Constantes.FIM_DIA;
@@ -35,15 +36,16 @@ public class ConsultaServiceImpl implements ConsultaService {
         return repository.findAll(pageable);
     }
 
-    public void save(Consulta consulta) {
-        checkValid(consulta);
+    //TODO: Implementar a situação de PODER agendar uma consulta num horário que outra consulta com o mesmo médico já foi CANCELADA
+    public void agendar(Consulta consulta) {
+        checkValidAgendar(consulta);
         repository.save(consulta);
     }
 
     //TODO: como refatorar?
-    private void checkValid(Consulta consulta) {
+    private void checkValidAgendar(Consulta consulta) {
 
-        consultaHorarioValidation.validateDataHora(consulta.getDataHora());
+        consultaHorarioValidation.validateDataHoraAgendar(consulta.getDataHora());
 
         if (!consulta.getPaciente().isAtivo()) {
             throw new InvalidDataException("Paciente inativo");
@@ -51,12 +53,12 @@ public class ConsultaServiceImpl implements ConsultaService {
         if (!consulta.getMedico().isAtivo()) {
             throw new InvalidDataException("Médico inativo");
         }
-        if (existeConsultaNoDia(consulta.getPaciente(), consulta.getDataHora())) {
+        if (pacienteTemConsultaNoDia(consulta.getPaciente(), consulta.getDataHora())) {
             throw new InvalidDataException("Paciente já possui consulta marcada para o dia");
         }
     }
 
-    private boolean existeConsultaNoDia(Paciente paciente, LocalDateTime dataHora) {
+    private boolean pacienteTemConsultaNoDia(Paciente paciente, LocalDateTime dataHora) {
         return repository.existsByPacienteIdAndDataHoraBetween(paciente.getId(),
                 dataHora.withHour(INICIO_DIA).withMinute(0),
                 dataHora.withHour(FIM_DIA).withMinute(59));
@@ -66,14 +68,27 @@ public class ConsultaServiceImpl implements ConsultaService {
     public void reagendar(Consulta consulta, LocalDateTime dataHora) {
         consulta.setDataHora(dataHora);
         consulta.setStatus(StatusConsulta.REAGENDADA);
-        save(consulta);
+        agendar(consulta);
     }
 
     @Transactional
     public void cancelar(Consulta consulta, MotivoCancelamento motivo) {
+        checkValidCancelar(consulta);
         consulta.setMotivoCancelamento(motivo);
         consulta.setStatus(StatusConsulta.CANCELADA);
         repository.save(consulta);
+    }
+
+    private void checkValidCancelar(Consulta consulta) {
+        if (consulta.getStatus() == StatusConsulta.CANCELADA) {
+            throw new InvalidDataException("Consulta já está cancelada");
+        }
+        if (consulta.getStatus() == StatusConsulta.REALIZADA) {
+            throw new InvalidDataException("Consulta já foi realizada");
+        }
+        if (Duration.between(LocalDateTime.now(), consulta.getDataHora()).toHours() < 24) {
+            throw new InvalidDataException("Consulta não pode ser cancelada com menos de 24 horas de antecedência");
+        }
     }
 
 }

@@ -36,3 +36,5 @@ Uma API REST que simula uma clínica médica, sendo possível agendar e gerencia
 - A escolha do médico é opcional, sendo que nesse caso o sistema deve escolher aleatoriamente algum médico disponível na data/hora preenchida.
 - É obrigatório informar o motivo do cancelamento da consulta, dentre as opções: paciente desistiu, médico cancelou ou outros;
 - Uma consulta somente poderá ser cancelada com antecedência mínima de 24 horas.
+
+## Como rodar a aplicação

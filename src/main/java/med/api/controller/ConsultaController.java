@@ -24,8 +24,8 @@ public class ConsultaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //TODO: Implementar CreatedResource, para retornar o Location do recurso criado
-    public void create(@RequestBody @Valid ConsultaCreate consulta) {
-        service.save(mapper.toEntity(consulta));
+    public void agendar(@RequestBody @Valid ConsultaCreate consulta) {
+        service.agendar(mapper.toEntity(consulta));
     }
 
     @PutMapping(ID)

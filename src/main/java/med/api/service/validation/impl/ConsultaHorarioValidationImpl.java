@@ -14,7 +14,7 @@ import static med.api.common.Constantes.INICIO_DIA;
 public class ConsultaHorarioValidationImpl implements ConsultaHorarioValidation {
 
     @Override
-    public void validateDataHora(LocalDateTime dataHora) {
+    public void validateDataHoraAgendar(LocalDateTime dataHora) {
         if (isLessThan30MinutesAntecedence(dataHora)) {
             throw new InvalidDataException("Consulta deve ser agendada com pelo menos 30 minutos de antecedência");
         }

@@ -4,6 +4,6 @@ import java.time.LocalDateTime;
 
 public interface ConsultaHorarioValidation {
 
-    void validateDataHora(LocalDateTime dataHora);
+    void validateDataHoraAgendar(LocalDateTime dataHora);
 
 }

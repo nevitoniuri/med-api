@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import med.api.common.Constantes;
 import med.api.domain.request.MedicoCreate;
 import med.api.domain.request.MedicoUpdate;
-import med.api.domain.response.MedicoDTO;
+import med.api.domain.response.MedicoResponse;
 import med.api.domain.enums.Especialidade;
 import med.api.repository.MedicoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -43,7 +43,7 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var medico = payloadExtractor.asListOf(MedicoDTO.class, true).iterator().next();
+        var medico = payloadExtractor.asListOf(MedicoResponse.class, true).iterator().next();
         assertEquals(crm, medico.crm());
     }
 
@@ -58,7 +58,7 @@ class MedicoControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var medicos = payloadExtractor.asListOf(MedicoDTO.class, true);
+        var medicos = payloadExtractor.asListOf(MedicoResponse.class, true);
         medicos.forEach(m -> assertTrue(m.ativo()));
         Assertions.assertEquals(3, medicos.size());
     }

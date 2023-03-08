@@ -1,6 +1,6 @@
 package med.api.service.mapper;
 
-import med.api.domain.response.MedicoDTO;
+import med.api.domain.response.MedicoResponse;
 import med.api.common.Utils;
 import med.api.domain.model.Medico;
 import med.api.domain.request.MedicoCreate;
@@ -36,8 +36,8 @@ public class MedicoMapper {
         }
     }
 
-    public MedicoDTO toDTO(Medico medico) {
-        return MedicoDTO.builder()
+    public MedicoResponse toDTO(Medico medico) {
+        return MedicoResponse.builder()
                 .id(medico.getId())
                 .ativo(medico.isAtivo())
                 .nome(medico.getNome())

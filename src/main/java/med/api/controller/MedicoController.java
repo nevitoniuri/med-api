@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import med.api.domain.filter.MedicoFilter;
 import med.api.domain.request.MedicoCreate;
 import med.api.domain.request.MedicoUpdate;
-import med.api.domain.response.MedicoDTO;
+import med.api.domain.response.MedicoResponse;
 import med.api.service.MedicoService;
 import med.api.service.mapper.MedicoMapper;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class MedicoController {
     private final MedicoMapper mapper;
 
     @GetMapping
-    public Page<MedicoDTO> list(MedicoFilter filter, Pageable pageable) {
+    public Page<MedicoResponse> list(MedicoFilter filter, Pageable pageable) {
         return service.list(filter, pageable).map(mapper::toDTO);
     }
 

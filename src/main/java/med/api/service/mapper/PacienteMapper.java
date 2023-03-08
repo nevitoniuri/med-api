@@ -3,7 +3,7 @@ package med.api.service.mapper;
 import med.api.common.Utils;
 import med.api.domain.request.PacienteCreate;
 import med.api.domain.request.PacienteUpdate;
-import med.api.domain.response.PacienteDTO;
+import med.api.domain.response.PacienteResponse;
 import med.api.domain.model.Paciente;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,8 @@ import java.util.Objects;
 @Component
 public class PacienteMapper {
 
-    public PacienteDTO toDTO(Paciente paciente) {
-        return PacienteDTO.builder()
+    public PacienteResponse toDTO(Paciente paciente) {
+        return PacienteResponse.builder()
                 .id(paciente.getId())
                 .ativo(paciente.isAtivo())
                 .nome(paciente.getNome())

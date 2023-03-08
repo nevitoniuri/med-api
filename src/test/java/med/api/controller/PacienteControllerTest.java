@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import med.api.common.Constantes;
 import med.api.domain.request.PacienteCreate;
 import med.api.domain.request.PacienteUpdate;
-import med.api.domain.response.PacienteDTO;
+import med.api.domain.response.PacienteResponse;
 import med.api.repository.PacienteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -41,7 +41,7 @@ class PacienteControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var paciente = payloadExtractor.asListOf(PacienteDTO.class, true).iterator().next();
+        var paciente = payloadExtractor.asListOf(PacienteResponse.class, true).iterator().next();
         assertEquals(id, paciente.id());
         assertEquals(cpf, paciente.cpf());
     }
@@ -57,7 +57,7 @@ class PacienteControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var pacientes = payloadExtractor.asListOf(PacienteDTO.class, true);
+        var pacientes = payloadExtractor.asListOf(PacienteResponse.class, true);
 
         assertEquals(3, pacientes.size());
         pacientes.forEach(p -> assertTrue(p.ativo()));

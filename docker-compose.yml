@@ -1,34 +1,26 @@
 version: '3.8'
 services:
-  API:
-    image: 'med-api-docker.jar'
-    ports:
-      - "8080:8080"
-    depends_on:
-      PostgreSQL:
-        condition: service_healthy
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/vollmed-api-docker
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-    restart: on-failure
 
-  PostgreSQL:
+  med-api:
     image: postgres
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=med-api
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=vollmed-api-docker
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - POSTGRES_PASSWORD=postgres
     restart: on-failure
     volumes:
-      - PostgreSQL-data:/var/lib/postgresql/data
+      - med-api-data:/var/lib/postgresql/data
+
+  med-api-test:
+    image: postgres
+    environment:
+      - POSTGRES_DB=med-api-test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
 
 volumes:
-  PostgreSQL-data:
+  med-api-data:

@@ -1,6 +1,9 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/vollmed-api-docker
+    url: jdbc:postgresql://localhost:5432/med-api
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
